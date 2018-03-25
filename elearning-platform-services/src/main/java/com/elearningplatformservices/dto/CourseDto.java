@@ -3,9 +3,13 @@ package com.elearningplatformservices.dto;
 import com.elearningplatformservices.entity.CourseEntity;
 import com.elearningplatformservices.entity.InstructorEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.ManyToOne;
 
+@Getter
+@Setter
 public class CourseDto {
 
     @JsonIgnore
@@ -16,44 +20,14 @@ public class CourseDto {
     @JsonIgnore
     private InstructorEntity instructorEntity;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    public CourseDto(String name, String course_type, double price, InstructorEntity instructorEntity) {
         this.name = name;
-    }
-
-    public String getCourse_type() {
-        return course_type;
-    }
-
-    public void setCourse_type(String course_type) {
         this.course_type = course_type;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
         this.price = price;
-    }
-
-    public InstructorEntity getInstructorEntity() {
-        return instructorEntity;
-    }
-
-    public void setInstructorEntity(InstructorEntity instructorEntity) {
         this.instructorEntity = instructorEntity;
+    }
+
+    public CourseDto() {
     }
 
     public CourseEntity toEntity() {

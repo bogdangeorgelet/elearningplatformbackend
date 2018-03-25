@@ -1,10 +1,14 @@
 package com.elearningplatformservices.entity;
 
 import com.elearningplatformservices.dto.CourseDto;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
+@Getter
+@Setter
 public class CourseEntity {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +18,7 @@ public class CourseEntity {
     private double price;
     @ManyToOne
     private InstructorEntity instructorEntity;
+
 
     public CourseDto toDto() {
         CourseDto dto = new CourseDto();
@@ -35,43 +40,4 @@ public class CourseEntity {
     public CourseEntity() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getCourse_type() {
-        return course_type;
-    }
-
-    public void setCourse_type(String course_type) {
-        this.course_type = course_type;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public InstructorEntity getInstructorEntity() {
-        return instructorEntity;
-    }
-
-    public void setInstructorEntity(InstructorEntity instructorEntity) {
-        this.instructorEntity = instructorEntity;
-    }
 }

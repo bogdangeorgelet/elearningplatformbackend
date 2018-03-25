@@ -37,7 +37,7 @@ public class CourseControllerImpl implements ICourseEndpoint{
         return courseService.create(newCourse);
     }
 
-    public String update(String serialNumber, CourseDto courseDto) {
-        return courseService.update(serialNumber, courseDto);
+    public String update(String name, CourseDto courseDto) {
+        return courseService.update(name, courseDto);
     }
 }

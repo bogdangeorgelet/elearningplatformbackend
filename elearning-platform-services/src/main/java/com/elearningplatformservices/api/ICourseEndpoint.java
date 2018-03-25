@@ -23,6 +23,6 @@ public interface ICourseEndpoint {
     @PostMapping(path = "/add")
     String create(CourseDto newCourse);
 
-    @PutMapping(path = "/{serialNumber}")
-    String update(String serialNumber, CourseDto courseDto);
+    @PutMapping(path = "/{name}")
+    String update(String name, CourseDto courseDto);
 }
