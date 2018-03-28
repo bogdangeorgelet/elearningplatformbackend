@@ -10,6 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(name = "customer")
 public class CustomerEntity {
 
     @Id
@@ -21,7 +22,7 @@ public class CustomerEntity {
     private String email;
     private String address;
     private String phoneNumber;
-    @OneToMany(mappedBy = "customer")
+    @OneToMany
     private List<CourseEntity> courses;
 
     public CustomerEntity(String username, String password, String fullName,

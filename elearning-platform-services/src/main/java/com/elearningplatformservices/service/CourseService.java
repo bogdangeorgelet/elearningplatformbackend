@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,25 +31,24 @@ public class CourseService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseEntity<CourseDto> getOne(@PathVariable(value = "name") String name) {
-        if (this.courseRepository.findByName(name) != null)
-            return new ResponseEntity<>(this.courseRepository.findByName(name).toDto(),
-                    HttpStatus.OK);
+    public ResponseEntity<CourseDto> getOne(Long id) {
+        if (this.courseRepository.findOne(id) != null)
+            return new ResponseEntity<>(this.courseRepository.findOne(id).toDto(), HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    public String create(@RequestBody CourseDto temp) {
+    public String create(CourseDto temp) {
         if (temp != null &&
-                this.courseRepository.findByName(temp.getName()) != null) {
+                this.courseRepository.findOne(temp.getId()) != null) {
             this.courseRepository.save(temp.toEntity());
             return "Created";
         } else
             return "Couldn't create";
     }
 
-    public String delete(@PathVariable(value = "name") String name) {
-        CourseEntity entity = this.courseRepository.findByName(name);
+    public String delete(Long id) {
+        CourseEntity entity = this.courseRepository.findOne(id);
         if (entity != null) {
             this.courseRepository.delete(entity);
             return "Deleted";
@@ -56,10 +56,9 @@ public class CourseService {
             return "Couldn't Delete";
     }
 
-    public String update(@PathVariable(value = "name") String name,
-                         @RequestBody CourseDto courseDto) {
-        if (this.courseRepository.findByName(name) != null) {
-            CourseDto dto = this.courseRepository.findByName(name).toDto();
+    public String update(Long id, CourseDto courseDto) {
+        if (this.courseRepository.findOne(id) != null) {
+            CourseDto dto = this.courseRepository.findOne(id).toDto();
             if (courseDto.getName().equals(dto.getName())) {
                 dto.update(courseDto);
                 this.courseRepository.save(dto.toEntity());
@@ -71,7 +70,7 @@ public class CourseService {
                 else {
                     dto.update(courseDto);
                     this.courseRepository.save(dto.toEntity());
-                    return "updated";
+                    return "Updated";
                 }
             }
         } else

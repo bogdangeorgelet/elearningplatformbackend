@@ -6,7 +6,7 @@ import com.elearningplatformservices.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,23 +21,28 @@ public class CourseControllerImpl implements ICourseEndpoint{
         this.courseService = courseService;
     }
 
+    @GetMapping
     public List<CourseDto> getAll() {
         return courseService.getAllCourses();
     }
 
-    public ResponseEntity<CourseDto> getOne(String name) {
-        return courseService.getOne(name);
+    @GetMapping(path = "/{id}")
+    public ResponseEntity<CourseDto> getOne(@PathVariable Long id) {
+        return courseService.getOne(id);
     }
 
-    public String delete(String name) {
-        return courseService.delete(name);
+    @DeleteMapping(path = "/{id}")
+    public String delete(@PathVariable Long id) {
+        return courseService.delete(id);
     }
 
-    public String create(CourseDto newCourse) {
+    @PostMapping(path = "/add")
+    public String create(@RequestBody CourseDto newCourse) {
         return courseService.create(newCourse);
     }
 
-    public String update(String name, CourseDto courseDto) {
-        return courseService.update(name, courseDto);
+    @PutMapping(path = "/{id}")
+    public String update(@PathVariable Long id, @RequestBody CourseDto courseDto) {
+        return courseService.update(id, courseDto);
     }
 }

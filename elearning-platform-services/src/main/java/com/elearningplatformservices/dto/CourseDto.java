@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 @Setter
 public class CourseDto {
 
-    @JsonIgnore
     private Long id;
     private String name;
     private String course_type;

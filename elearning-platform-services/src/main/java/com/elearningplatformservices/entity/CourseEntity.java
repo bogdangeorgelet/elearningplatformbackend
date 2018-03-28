@@ -9,8 +9,10 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@Table(name = "courses")
 public class CourseEntity {
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
