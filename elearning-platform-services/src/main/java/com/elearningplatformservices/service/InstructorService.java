@@ -44,8 +44,8 @@ public class InstructorService {
         instructorEntity.setFirstName(instructorDto.getFirstName());
         instructorEntity.setLastName(instructorDto.getLastName());
         instructorEntity.setEmail(instructorDto.getEmail());
-        instructorDto.setPassword(instructorDto.getPassword());
-        instructorDto.setDateCreated(instructorDto.getDateCreated());
+        instructorEntity.setPassword(instructorDto.getPassword());
+        instructorEntity.setDateCreated(instructorDto.getDateCreated());
         IInstructorRepository.save(instructorEntity);
     }
 

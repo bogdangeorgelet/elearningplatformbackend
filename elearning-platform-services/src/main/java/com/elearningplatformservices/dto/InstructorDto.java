@@ -1,6 +1,5 @@
 package com.elearningplatformservices.dto;
 
-import com.elearningplatformservices.entity.InstructorEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,8 +17,6 @@ public class InstructorDto {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateCreated;
-
-    private InstructorEntity instructorEntity;
 
     public InstructorDto() {}
 
