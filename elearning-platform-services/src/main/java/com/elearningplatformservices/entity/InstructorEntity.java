@@ -1,18 +1,17 @@
 package com.elearningplatformservices.entity;
 
 
+import com.elearningplatformservices.dto.InstructorDto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 @Getter
 @Setter
+@Table(name = "instructors")
 public class InstructorEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,11 +24,28 @@ public class InstructorEntity {
 
     public InstructorEntity() {}
 
-    public InstructorEntity(String firstName, String lastName, String password, String email, Date dateCreated) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.dateCreated = dateCreated;
+    public InstructorDto toDto() {
+        InstructorDto instructorDto = new InstructorDto();
+        if (this.id != null)
+            instructorDto.setId(this.id);
+        instructorDto.setFirstName(this.firstName);
+        instructorDto.setLastName(this.lastName);
+        instructorDto.setPassword(this.password);
+        instructorDto.setEmail(this.email);
+        instructorDto.setDateCreated(this.dateCreated);
+
+        return instructorDto;
+    }
+
+    public InstructorEntity toEntity(InstructorDto instructorDto) {
+        if (instructorDto.getId() != null)
+            this.id = instructorDto.getId();
+        this.firstName = instructorDto.getFirstName();
+        this.lastName = instructorDto.getLastName();
+        this.email = instructorDto.getEmail();
+        this.password = instructorDto.getPassword();
+        this.dateCreated = instructorDto.getDateCreated();
+
+        return this;
     }
 }
