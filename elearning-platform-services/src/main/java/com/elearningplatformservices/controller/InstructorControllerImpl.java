@@ -1,32 +1,31 @@
 package com.elearningplatformservices.controller;
 
 
+import com.elearningplatformservices.api.IInstructorEndpoint;
 import com.elearningplatformservices.dto.InstructorDto;
+import com.elearningplatformservices.entity.InstructorEntity;
 import com.elearningplatformservices.service.InstructorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@CrossOrigin
-@RestController
-@RequestMapping("/instructors")
-public class InstructorController {
+@Component
+public class InstructorControllerImpl implements IInstructorEndpoint {
 
     private InstructorService instructorService;
 
     @Autowired
-    public InstructorController(InstructorService instructorService) {
+    public InstructorControllerImpl(InstructorService instructorService) {
         this.instructorService = instructorService;
     }
 
     @GetMapping
-    public List<InstructorDto> getAllInstructors() {
+    public Iterable<InstructorEntity> getAll() {
         return instructorService.getAllInstructors();
     }
 
-    @GetMapping(value = "/{id}")
-    public InstructorDto getOneInstructor(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public InstructorDto getOne(@PathVariable Long id) {
         return instructorService.getOneInstructor(id);
     }
 
@@ -36,12 +35,12 @@ public class InstructorController {
     }
 
     @PutMapping("/{id}")
-    public void updateInstructor(@PathVariable Long id, @RequestBody InstructorDto instructorDto) {
+    public void update(@PathVariable Long id,@RequestBody InstructorDto instructorDto) {
         instructorService.updateInstructor(id, instructorDto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteInstructor(@PathVariable("id") Long id) {
+    public void delete(@PathVariable("id") Long id) {
         instructorService.deleteInstructor(id);
     }
 }

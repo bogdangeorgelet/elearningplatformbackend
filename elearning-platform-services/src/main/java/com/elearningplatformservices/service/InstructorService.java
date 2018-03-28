@@ -2,35 +2,32 @@ package com.elearningplatformservices.service;
 
 import com.elearningplatformservices.dto.InstructorDto;
 import com.elearningplatformservices.entity.InstructorEntity;
-import com.elearningplatformservices.repository.InstructorRepository;
+import com.elearningplatformservices.repository.IInstructorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class InstructorService {
 
-    private InstructorRepository instructorRepository;
+    private IInstructorRepository IInstructorRepository;
     private Date date = new Date();
 
     @Autowired
-    public InstructorService(InstructorRepository instructorRepository) {
-        this.instructorRepository = instructorRepository;
+    public InstructorService(IInstructorRepository IInstructorRepository) {
+        this.IInstructorRepository = IInstructorRepository;
     }
 
-    public List<InstructorDto> getAllInstructors() {
-        List<InstructorDto> instructorDtos = new ArrayList<>();
-        instructorRepository.findAll().forEach(userEntity -> {
-            instructorDtos.add(userEntity.toDto());
-        });
+    public Iterable<InstructorEntity> getAllInstructors() {
+        Iterable<InstructorEntity> instructorDtos;
+            instructorDtos = IInstructorRepository.findAll();
         return instructorDtos;
     }
 
     public InstructorDto getOneInstructor(Long id) {
-        InstructorEntity instructorEntity = instructorRepository.findOne(id);
+        InstructorEntity instructorEntity = IInstructorRepository.findOne(id);
         if (instructorEntity != null)
             return instructorEntity.toDto();
         else
@@ -39,22 +36,20 @@ public class InstructorService {
 
     public void addInstructor(InstructorDto instructorDto) {
         InstructorEntity instructorEntity = new InstructorEntity().toEntity(instructorDto);
-        instructorDto.setPassword("xxx");
-        instructorDto.setDateCreated(date);
-        instructorRepository.save(instructorEntity);
+        IInstructorRepository.save(instructorEntity);
     }
 
     public void updateInstructor(Long id, InstructorDto instructorDto) {
-        InstructorEntity instructorEntity = instructorRepository.findOne(id);
+        InstructorEntity instructorEntity = IInstructorRepository.findOne(id);
         instructorEntity.setFirstName(instructorDto.getFirstName());
         instructorEntity.setLastName(instructorDto.getLastName());
         instructorEntity.setEmail(instructorDto.getEmail());
         instructorDto.setPassword(instructorDto.getPassword());
         instructorDto.setDateCreated(instructorDto.getDateCreated());
-        instructorRepository.save(instructorEntity);
+        IInstructorRepository.save(instructorEntity);
     }
 
     public void deleteInstructor(Long id) {
-        instructorRepository.delete(id);
+        IInstructorRepository.delete(id);
     }
 }
