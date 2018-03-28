@@ -18,14 +18,5 @@ public class InstructorDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateCreated;
 
-    public InstructorDto() {
-    }
-
-    public InstructorDto(String firstName, String lastName, String password, String email, Date dateCreated) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.email = email;
-        this.dateCreated = dateCreated;
-    }
+    public InstructorDto() {}
 }
