@@ -13,7 +13,6 @@ import java.util.Date;
 public class InstructorService {
 
     private IInstructorRepository IInstructorRepository;
-    private Date date = new Date();
 
     @Autowired
     public InstructorService(IInstructorRepository IInstructorRepository) {
@@ -22,7 +21,7 @@ public class InstructorService {
 
     public Iterable<InstructorEntity> getAllInstructors() {
         Iterable<InstructorEntity> instructorDtos;
-            instructorDtos = IInstructorRepository.findAll();
+        instructorDtos = IInstructorRepository.findAll();
         return instructorDtos;
     }
 
