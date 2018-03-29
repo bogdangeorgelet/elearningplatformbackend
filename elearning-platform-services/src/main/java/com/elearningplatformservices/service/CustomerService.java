@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,55 +25,38 @@ public class CustomerService {
     }
 
     public List<CustomerDto> getAll() {
-        List<CustomerEntity> allCustomers = (List<CustomerEntity>) this.customerRepository.findAll();
-        return allCustomers.stream()
-                .map(CustomerEntity::toDto)
-                .collect(Collectors.toList());
+        List<CustomerDto> allCustomers = new ArrayList<>();
+        customerRepository.findAll().forEach(customerEntity -> {
+            allCustomers.add(customerEntity.toDto());
+        });
+        return allCustomers;
     }
 
-    public ResponseEntity<CustomerDto> getOne(@PathVariable (value = "username") String username) {
-        if (this.customerRepository.findByUsername(username)!= null) {
-            return new ResponseEntity<>(this.customerRepository.findByUsername(username).toDto(),
-                    HttpStatus.OK);
-        } else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public CustomerDto getOne(Long id) {
+        CustomerEntity customerEntity = customerRepository.findOne(id);
+        if (customerEntity != null)
+            return customerEntity.toDto();
+        else
+            return null;
     }
 
-    public String create(@RequestBody CustomerDto customerDto) {
-        if (customerDto != null && this.customerRepository.findByUsername(customerDto.getUsername()) != null) {
-            this.customerRepository.save(customerDto.toEntity());
-            return "Created";
-        } else
-            return "Couldn't create";
+    public void create(CustomerDto newCustomer) {
+        CustomerEntity customerEntity = new CustomerEntity().toEntity(newCustomer);
+        customerRepository.save(customerEntity);
     }
 
-    public String delete(@PathVariable(value = "username") String username)  {
-        CustomerEntity entity = this.customerRepository.findByUsername(username);
-        if (entity != null) {
-            this.customerRepository.delete(entity);
-            return "Deleted";
-        } else
-            return "Couldn't Delete";
+    public void update(Long id, CustomerDto updatedCustomer) {
+        CustomerEntity customerEntity = customerRepository.findOne(id);
+        customerEntity.setUsername(updatedCustomer.getUsername());
+        customerEntity.setPassword(updatedCustomer.getPassword());
+        customerEntity.setFullName(updatedCustomer.getFullName());
+        customerEntity.setEmail(updatedCustomer.getEmail());
+        customerEntity.setAddress(updatedCustomer.getAddress());
+        customerEntity.setPhoneNumber(updatedCustomer.getPhoneNumber());
+        customerRepository.save(customerEntity);
     }
 
-    public String update(@PathVariable String username, @RequestBody CustomerDto customerDto) {
-        if (this.customerRepository.findByUsername(username) != null) {
-            CustomerDto dto = this.customerRepository.findByUsername(username).toDto();
-            if (customerDto.getUsername().equals(dto.getUsername())) {
-                dto.update(customerDto);
-                this.customerRepository.save(dto.toEntity());
-                return "updated";
-            } else {
-                List<CustomerEntity> all = (List<CustomerEntity>) this.customerRepository.findAll();
-                if (all.stream().anyMatch(un -> un.getUsername().equals(dto.getUsername()))) {
-                    return "Couldn't Update";
-                } else {
-                    dto.update(customerDto);
-                    this.customerRepository.save(dto.toEntity());
-                    return "Updated";
-                }
-            }
-        } else
-            return "Couldn't update";
+    public void delete(Long id) {
+        customerRepository.delete(id);
     }
 }

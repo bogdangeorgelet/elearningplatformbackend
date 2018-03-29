@@ -17,12 +17,12 @@ public interface ICourseEndpoint {
     @GetMapping("/{id}")
     CourseDto getOne(@PathVariable Long id);
 
-    @DeleteMapping("/{id}")
-    void delete(@PathVariable Long id);
-
     @PostMapping("/add")
     void create(@RequestBody CourseDto newCourse);
 
     @PutMapping("/{id}")
     void update(@PathVariable Long id, @RequestBody CourseDto courseDto);
+
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable Long id);
 }

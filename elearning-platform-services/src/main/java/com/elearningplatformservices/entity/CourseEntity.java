@@ -19,6 +19,9 @@ public class CourseEntity {
     private String course_type;
     private Double price;
 
+    public CourseEntity() {
+    }
+
 
     public CourseDto toDto() {
         CourseDto dto = new CourseDto();
@@ -35,9 +38,6 @@ public class CourseEntity {
         this.course_type = courseDto.getCourse_type();
         this.price = courseDto.getPrice();
         return this;
-    }
-
-    public CourseEntity() {
     }
 
 }

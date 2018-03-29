@@ -24,60 +24,6 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-//    public List<CourseDto> getAllCourses() {
-//        List<CourseEntity> all = (List<CourseEntity>) this.courseRepository.findAll();
-//        return all.stream()
-//                .map(CourseEntity::toDto)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public ResponseEntity<CourseDto> getOne(@PathVariable Long id) {
-//        if (this.courseRepository.findOne(id) != null)
-//            return new ResponseEntity<>(this.courseRepository.findOne(id).toDto(), HttpStatus.OK);
-//        else
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
-//
-//    public String update(@PathVariable Long id,
-//                         @RequestBody CourseDto courseDto) {
-//        if (this.courseRepository.findOne(id) != null) {
-//            CourseDto dto = this.courseRepository.findOne(id).toDto();
-//            if (courseDto.getName().equals(dto.getName())) {
-//                dto.update(courseDto);
-//                this.courseRepository.save(dto.toEntity());
-//                return "Updated";
-//            } else {
-//                List<CourseEntity> all = (List<CourseEntity>) this.courseRepository.findAll();
-//                if (all.stream().anyMatch(un -> un.getName().equals(dto.getName())))
-//                    return "Couldn't update";
-//                else {
-//                    dto.update(courseDto);
-//                    this.courseRepository.save(dto.toEntity());
-//                    return "Updated";
-//                }
-//            }
-//        } else
-//            return "Couldn't update";
-//    }
-//
-//    public String create(@RequestBody CourseDto temp) {
-//        if (temp != null &&
-//                this.courseRepository.findOne(temp.getId()) != null) {
-//            this.courseRepository.save(temp.toEntity());
-//            return "Created";
-//        } else
-//            return "Couldn't create";
-//    }
-//
-//    public String delete(Long id) {
-//        CourseEntity entity = this.courseRepository.findOne(id);
-//        if (entity != null) {
-//            this.courseRepository.delete(entity);
-//            return "Deleted";
-//        } else
-//            return "Couldn't Delete";
-//    }
-
     public List<CourseDto> getAllCourses() {
         List<CourseDto> allCourses = new ArrayList<>();
         courseRepository.findAll().forEach(courseEntity -> {
@@ -108,7 +54,7 @@ public class CourseService {
         courseRepository.save(courseEntity);
     }
 
-    public void delete(@PathVariable Long id) {
+    public void delete(Long id) {
         courseRepository.delete(id);
     }
 

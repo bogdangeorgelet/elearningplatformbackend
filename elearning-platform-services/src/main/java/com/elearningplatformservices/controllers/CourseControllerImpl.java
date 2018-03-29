@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Component
+@CrossOrigin
 public class CourseControllerImpl implements ICourseEndpoint{
 
     private CourseService courseService;
@@ -20,27 +21,22 @@ public class CourseControllerImpl implements ICourseEndpoint{
         this.courseService = courseService;
     }
 
-    @GetMapping
     public List<CourseDto> getAll() {
         return courseService.getAllCourses();
     }
 
-    @GetMapping("/{id}")
     public CourseDto getOne(@PathVariable Long id) {
         return courseService.getOne(id);
     }
 
-    @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         courseService.delete(id);
     }
 
-    @PostMapping("/add")
     public void create(@RequestBody CourseDto newCourse) {
         courseService.create(newCourse);
     }
 
-    @PutMapping("/{id}")
     public void update(@PathVariable Long id, @RequestBody CourseDto courseDto) {
         courseService.update(id, courseDto);
     }
