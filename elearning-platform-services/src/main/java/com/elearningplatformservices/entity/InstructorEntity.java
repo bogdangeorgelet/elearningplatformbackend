@@ -13,6 +13,7 @@ import java.util.Date;
 @Setter
 @Table(name = "instructors")
 public class InstructorEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

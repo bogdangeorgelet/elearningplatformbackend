@@ -9,6 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class InstructorDto {
+
     private Long id;
     private String firstName;
     private String lastName;
@@ -19,5 +20,4 @@ public class InstructorDto {
     private Date dateCreated;
 
     public InstructorDto() {}
-
 }

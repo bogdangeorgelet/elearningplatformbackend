@@ -1,4 +1,4 @@
-package com.elearningplatformservices.controllers;
+package com.elearningplatformservices.controller;
 
 import com.elearningplatformservices.api.ICourseEndpoint;
 import com.elearningplatformservices.dto.CourseDto;

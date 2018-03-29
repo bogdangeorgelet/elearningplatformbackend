@@ -2,6 +2,7 @@ package com.elearningplatformservices.api;
 
 import com.elearningplatformservices.dto.InstructorDto;
 import com.elearningplatformservices.entity.InstructorEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,7 +13,7 @@ public interface IInstructorEndpoint {
     Iterable<InstructorEntity> getAll();
 
     @GetMapping("/{id}")
-    InstructorDto getOne(@PathVariable Long id);
+    ResponseEntity<Object> getOne(@PathVariable Long id);
 
     @PostMapping
     void addInstructor(@RequestBody InstructorDto instructorDto);
