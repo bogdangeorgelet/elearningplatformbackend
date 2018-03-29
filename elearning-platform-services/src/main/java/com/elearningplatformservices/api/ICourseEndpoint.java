@@ -14,15 +14,15 @@ public interface ICourseEndpoint {
     @GetMapping
     List<CourseDto> getAll();
 
-    @GetMapping(path = "/{id}")
-    ResponseEntity<CourseDto> getOne(Long id);
+    @GetMapping("/{id}")
+    CourseDto getOne(@PathVariable Long id);
 
-    @DeleteMapping(path = "/{id}")
-    String delete(Long id);
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable Long id);
 
-    @PostMapping(path = "/add")
-    String create(CourseDto newCourse);
+    @PostMapping("/add")
+    void create(@RequestBody CourseDto newCourse);
 
-    @PutMapping(path = "/{id}")
-    String update(Long id, CourseDto courseDto);
+    @PutMapping("/{id}")
+    void update(@PathVariable Long id, @RequestBody CourseDto courseDto);
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
 @Component
 public class CourseControllerImpl implements ICourseEndpoint{
 
@@ -26,23 +25,23 @@ public class CourseControllerImpl implements ICourseEndpoint{
         return courseService.getAllCourses();
     }
 
-    @GetMapping(path = "/{id}")
-    public ResponseEntity<CourseDto> getOne(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public CourseDto getOne(@PathVariable Long id) {
         return courseService.getOne(id);
     }
 
-    @DeleteMapping(path = "/{id}")
-    public String delete(@PathVariable Long id) {
-        return courseService.delete(id);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        courseService.delete(id);
     }
 
-    @PostMapping(path = "/add")
-    public String create(@RequestBody CourseDto newCourse) {
-        return courseService.create(newCourse);
+    @PostMapping("/add")
+    public void create(@RequestBody CourseDto newCourse) {
+        courseService.create(newCourse);
     }
 
-    @PutMapping(path = "/{id}")
-    public String update(@PathVariable Long id, @RequestBody CourseDto courseDto) {
-        return courseService.update(id, courseDto);
+    @PutMapping("/{id}")
+    public void update(@PathVariable Long id, @RequestBody CourseDto courseDto) {
+        courseService.update(id, courseDto);
     }
 }

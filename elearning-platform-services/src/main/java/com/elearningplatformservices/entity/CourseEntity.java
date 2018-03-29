@@ -13,13 +13,11 @@ import javax.persistence.*;
 public class CourseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String course_type;
-    private double price;
-    @ManyToOne
-    private InstructorEntity instructorEntity;
+    private Double price;
 
 
     public CourseDto toDto() {
@@ -28,15 +26,15 @@ public class CourseEntity {
         dto.setName(this.name);
         dto.setCourse_type(this.course_type);
         dto.setPrice(this.price);
-        dto.setInstructorEntity(this.instructorEntity);
         return dto;
     }
 
-    public CourseEntity(String name, String course_type, double price, InstructorEntity instructorEntity) {
-        this.name = name;
-        this.course_type = course_type;
-        this.price = price;
-        this.instructorEntity = instructorEntity;
+    public CourseEntity toEntity(CourseDto courseDto) {
+        this.id = courseDto.getId();
+        this.name = courseDto.getName();
+        this.course_type = courseDto.getCourse_type();
+        this.price = courseDto.getPrice();
+        return this;
     }
 
     public CourseEntity() {

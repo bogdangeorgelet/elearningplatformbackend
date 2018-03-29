@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 public class CustomerDto {
 
-    @JsonIgnore
     private Long id;
     private String fullName;
     private String username;
