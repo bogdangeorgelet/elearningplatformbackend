@@ -14,16 +14,16 @@ public interface ICustomerEndpoint {
     @GetMapping
     List<CustomerDto> getAll();
 
-    @GetMapping(path = "/{username}")
-    ResponseEntity<CustomerDto> getOne(String username);
+    @GetMapping("/{id}")
+    CustomerDto getOne(@PathVariable Long id);
 
-    @DeleteMapping(path = "/{username}")
-    String delete(String username);
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable Long id);
 
-    @PostMapping(path = "/add")
-    String create(CustomerDto customerDto);
+    @PostMapping("/add")
+    void create(@RequestBody CustomerDto customerDto);
 
-    @PutMapping(path = "/{username}")
-    String update(String username, CustomerDto customerDto);
+    @PutMapping("/{id}")
+    void update(@PathVariable Long id, @RequestBody CustomerDto customerDto);
 
 }

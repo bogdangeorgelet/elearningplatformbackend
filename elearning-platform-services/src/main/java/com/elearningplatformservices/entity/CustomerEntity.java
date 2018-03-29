@@ -10,10 +10,11 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Table(name = "customer")
 public class CustomerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String username;
     private String password;
@@ -21,25 +22,8 @@ public class CustomerEntity {
     private String email;
     private String address;
     private String phoneNumber;
-    @OneToMany(mappedBy = "customer")
-    private List<CourseEntity> courses;
-
-    public CustomerEntity(String username, String password, String fullName,
-                          String email, String address, String phoneNumber, List<CourseEntity> courses) {
-        this.username = username;
-        this.password = password;
-        this.fullName = fullName;
-        this.email = email;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.courses = courses;
-    }
 
     public CustomerEntity() {
-    }
-
-    public void setCourses(List<CourseEntity> courses) {
-        this.courses = courses;
     }
 
     public CustomerDto toDto() {
@@ -47,11 +31,22 @@ public class CustomerEntity {
         dto.setId(this.id);
         dto.setUsername(this.username);
         dto.setPassword(this.password);
+        dto.setFullName(this.fullName);
         dto.setAddress(this.address);
         dto.setEmail(this.email);
         dto.setPhoneNumber(this.phoneNumber);
-        dto.setCourses(this.courses);
         return dto;
+    }
+
+    public CustomerEntity toEntity(CustomerDto customerDto) {
+        this.id = customerDto.getId();
+        this.username = customerDto.getUsername();
+        this.password = customerDto.getPassword();
+        this.fullName = customerDto.getFullName();
+        this.email = customerDto.getEmail();
+        this.address = customerDto.getAddress();
+        this.phoneNumber = customerDto.getPhoneNumber();
+        return this;
     }
 
 }

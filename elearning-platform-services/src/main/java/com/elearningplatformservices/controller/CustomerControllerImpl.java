@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -25,19 +27,19 @@ public class CustomerControllerImpl implements ICustomerEndpoint{
         return customerService.getAll();
     }
 
-    public ResponseEntity<CustomerDto> getOne(String username) {
-        return customerService.getOne(username);
+    public CustomerDto getOne(@PathVariable Long id) {
+        return customerService.getOne(id);
     }
 
-    public String delete(String username) {
-        return customerService.delete(username);
+    public void delete(@PathVariable Long id) {
+        customerService.delete(id);
     }
 
-    public String create(CustomerDto customerDto) {
-        return customerService.create(customerDto);
+    public void create(@RequestBody CustomerDto customerDto) {
+        customerService.create(customerDto);
     }
 
-    public String update(String username, CustomerDto customerDto) {
-        return customerService.update(username, customerDto);
+    public void update(@PathVariable Long id, @RequestBody CustomerDto customerDto) {
+        customerService.update(id, customerDto);
     }
 }

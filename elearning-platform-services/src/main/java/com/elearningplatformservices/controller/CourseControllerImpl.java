@@ -6,12 +6,12 @@ import com.elearningplatformservices.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin
 @Component
+@CrossOrigin
 public class CourseControllerImpl implements ICourseEndpoint{
 
     private CourseService courseService;
@@ -25,19 +25,19 @@ public class CourseControllerImpl implements ICourseEndpoint{
         return courseService.getAllCourses();
     }
 
-    public ResponseEntity<CourseDto> getOne(String name) {
-        return courseService.getOne(name);
+    public CourseDto getOne(@PathVariable Long id) {
+        return courseService.getOne(id);
     }
 
-    public String delete(String name) {
-        return courseService.delete(name);
+    public void delete(@PathVariable Long id) {
+        courseService.delete(id);
     }
 
-    public String create(CourseDto newCourse) {
-        return courseService.create(newCourse);
+    public void create(@RequestBody CourseDto newCourse) {
+        courseService.create(newCourse);
     }
 
-    public String update(String name, CourseDto courseDto) {
-        return courseService.update(name, courseDto);
+    public void update(@PathVariable Long id, @RequestBody CourseDto courseDto) {
+        courseService.update(id, courseDto);
     }
 }

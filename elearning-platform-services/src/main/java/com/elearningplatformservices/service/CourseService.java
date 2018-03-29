@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,58 +25,37 @@ public class CourseService {
     }
 
     public List<CourseDto> getAllCourses() {
-        List<CourseEntity> all = (List<CourseEntity>) this.courseRepository.findAll();
-        return all.stream()
-                .map(CourseEntity::toDto)
-                .collect(Collectors.toList());
+        List<CourseDto> allCourses = new ArrayList<>();
+        courseRepository.findAll().forEach(courseEntity -> {
+            allCourses.add(courseEntity.toDto());
+        });
+        return allCourses;
     }
 
-    public ResponseEntity<CourseDto> getOne(@PathVariable(value = "name") String name) {
-        if (this.courseRepository.findByName(name) != null)
-            return new ResponseEntity<>(this.courseRepository.findByName(name).toDto(),
-                    HttpStatus.OK);
+    public CourseDto getOne(Long id) {
+        CourseEntity courseEntity = courseRepository.findOne(id);
+        if (courseEntity != null)
+            return courseEntity.toDto();
         else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return null;
     }
 
-    public String create(@RequestBody CourseDto temp) {
-        if (temp != null &&
-                this.courseRepository.findByName(temp.getName()) != null) {
-            this.courseRepository.save(temp.toEntity());
-            return "Created";
-        } else
-            return "Couldn't create";
+    public void create(CourseDto newCourse) {
+        CourseEntity courseEntity = new CourseEntity().toEntity(newCourse);
+        this.courseRepository.save(courseEntity);
     }
 
-    public String delete(@PathVariable(value = "name") String name) {
-        CourseEntity entity = this.courseRepository.findByName(name);
-        if (entity != null) {
-            this.courseRepository.delete(entity);
-            return "Deleted";
-        } else
-            return "Couldn't Delete";
+    public void update(Long id,
+                         CourseDto courseDto) {
+        CourseEntity courseEntity = courseRepository.findOne(id);
+        courseEntity.setName(courseDto.getName());
+        courseEntity.setPrice(courseDto.getPrice());
+        courseEntity.setCourse_type(courseDto.getCourse_type());
+        courseRepository.save(courseEntity);
     }
 
-    public String update(@PathVariable(value = "name") String name,
-                         @RequestBody CourseDto courseDto) {
-        if (this.courseRepository.findByName(name) != null) {
-            CourseDto dto = this.courseRepository.findByName(name).toDto();
-            if (courseDto.getName().equals(dto.getName())) {
-                dto.update(courseDto);
-                this.courseRepository.save(dto.toEntity());
-                return "Updated";
-            } else {
-                List<CourseEntity> all = (List<CourseEntity>) this.courseRepository.findAll();
-                if (all.stream().anyMatch(un -> un.getName().equals(dto.getName())))
-                    return "Couldn't update";
-                else {
-                    dto.update(courseDto);
-                    this.courseRepository.save(dto.toEntity());
-                    return "updated";
-                }
-            }
-        } else
-            return "Couldn't update";
+    public void delete(Long id) {
+        courseRepository.delete(id);
     }
 
 }
