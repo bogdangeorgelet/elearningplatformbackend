@@ -36,8 +36,7 @@ public class CustomerService {
         CustomerEntity customerEntity = customerRepository.findOne(id);
         if (customerEntity != null)
             return customerEntity.toDto();
-        else
-            return null;
+        else return null;
     }
 
     public void create(CustomerDto newCustomer) {

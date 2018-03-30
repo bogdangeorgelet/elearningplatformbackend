@@ -4,6 +4,7 @@ import com.elearningplatformservices.api.ICourseEndpoint;
 import com.elearningplatformservices.dto.CourseDto;
 import com.elearningplatformservices.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,12 @@ public class CourseControllerImpl implements ICourseEndpoint{
         return courseService.getAllCourses();
     }
 
-    public CourseDto getOne(@PathVariable Long id) {
-        return courseService.getOne(id);
+    public ResponseEntity<CourseDto> getOne(@PathVariable Long id) {
+        CourseDto courseDto = courseService.getOne(id);
+        if (courseDto != null)
+            return new ResponseEntity<>(courseDto, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     public void delete(@PathVariable Long id) {

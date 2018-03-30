@@ -2,13 +2,13 @@ package com.elearningplatformservices.controllers;
 
 import com.elearningplatformservices.api.ICustomerEndpoint;
 import com.elearningplatformservices.dto.CustomerDto;
+import com.elearningplatformservices.entity.CustomerEntity;
 import com.elearningplatformservices.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,8 +27,12 @@ public class CustomerControllerImpl implements ICustomerEndpoint{
         return customerService.getAll();
     }
 
-    public CustomerDto getOne(@PathVariable Long id) {
-        return customerService.getOne(id);
+    public ResponseEntity<CustomerDto> getOne(@PathVariable Long id) {
+        CustomerDto customerDto = customerService.getOne(id);
+        if (customerDto != null)
+            return new ResponseEntity<>(customerDto, HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     public void delete(@PathVariable Long id) {
