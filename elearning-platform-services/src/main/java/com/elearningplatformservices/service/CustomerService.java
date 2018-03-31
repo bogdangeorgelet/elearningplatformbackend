@@ -36,8 +36,7 @@ public class CustomerService {
         CustomerEntity customerEntity = customerRepository.findOne(id);
         if (customerEntity != null)
             return customerEntity.toDto();
-        else
-            return null;
+        else return null;
     }
 
     public void create(CustomerDto newCustomer) {
@@ -53,6 +52,7 @@ public class CustomerService {
         customerEntity.setEmail(updatedCustomer.getEmail());
         customerEntity.setAddress(updatedCustomer.getAddress());
         customerEntity.setPhoneNumber(updatedCustomer.getPhoneNumber());
+        customerEntity.setCourses(updatedCustomer.getCourses());
         customerRepository.save(customerEntity);
     }
 

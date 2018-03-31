@@ -1,6 +1,7 @@
 package com.elearningplatformservices.api;
 
 import com.elearningplatformservices.dto.CourseDto;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,9 +16,11 @@ public interface ICourseEndpoint {
     List<CourseDto> getAll();
 
     @GetMapping("/{id}")
-    CourseDto getOne(@PathVariable Long id);
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    ResponseEntity<CourseDto> getOne(@PathVariable Long id);
 
     @PostMapping("/add")
+    @ResponseStatus(HttpStatus.CREATED)
     void create(@RequestBody CourseDto newCourse);
 
     @PutMapping("/{id}")

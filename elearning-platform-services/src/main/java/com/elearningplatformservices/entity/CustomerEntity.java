@@ -14,7 +14,7 @@ import java.util.List;
 public class CustomerEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
     private String password;
@@ -22,6 +22,9 @@ public class CustomerEntity {
     private String email;
     private String address;
     private String phoneNumber;
+
+    @OneToMany
+    private List<CourseEntity> courses;
 
     public CustomerEntity() {
     }
@@ -35,6 +38,7 @@ public class CustomerEntity {
         dto.setAddress(this.address);
         dto.setEmail(this.email);
         dto.setPhoneNumber(this.phoneNumber);
+        dto.setCourses(this.courses);
         return dto;
     }
 
@@ -46,6 +50,7 @@ public class CustomerEntity {
         this.email = customerDto.getEmail();
         this.address = customerDto.getAddress();
         this.phoneNumber = customerDto.getPhoneNumber();
+        this.courses = customerDto.getCourses();
         return this;
     }
 
