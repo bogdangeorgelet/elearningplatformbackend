@@ -51,7 +51,7 @@ public class CourseService {
         courseEntity.setName(courseDto.getName());
         courseEntity.setPrice(courseDto.getPrice());
         courseEntity.setCourse_type(courseDto.getCourse_type());
-//        courseEntity.setCustomer(courseDto.getCustomer());
+        courseEntity.setCustomer(courseDto.getCustomer());
         courseRepository.save(courseEntity);
     }
 

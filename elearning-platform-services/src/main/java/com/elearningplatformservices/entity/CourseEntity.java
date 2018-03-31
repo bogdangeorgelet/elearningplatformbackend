@@ -18,6 +18,7 @@ public class CourseEntity {
     private String name;
     private String course_type;
     private Double price;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
