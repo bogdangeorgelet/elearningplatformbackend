@@ -4,6 +4,7 @@ import com.elearningplatformservices.api.ICustomerEndpoint;
 import com.elearningplatformservices.dto.CustomerDto;
 import com.elearningplatformservices.entity.CustomerEntity;
 import com.elearningplatformservices.service.CustomerService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
