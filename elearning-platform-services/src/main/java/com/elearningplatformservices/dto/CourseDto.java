@@ -1,6 +1,7 @@
 package com.elearningplatformservices.dto;
 
 import com.elearningplatformservices.entity.CourseEntity;
+import com.elearningplatformservices.entity.CustomerEntity;
 import com.elearningplatformservices.entity.InstructorEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -16,6 +17,8 @@ public class CourseDto {
     private String name;
     private String course_type;
     private Double price;
+    @JsonIgnore
+    private CustomerEntity customer;
 
     public CourseDto() {
     }
