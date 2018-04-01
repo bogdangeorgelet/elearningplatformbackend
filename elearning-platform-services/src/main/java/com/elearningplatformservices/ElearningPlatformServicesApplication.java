@@ -16,16 +16,16 @@ import static springfox.documentation.builders.PathSelectors.any;
 @EnableSwagger2
 public class ElearningPlatformServicesApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(ElearningPlatformServicesApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(ElearningPlatformServicesApplication.class, args);
+    }
 
-	@Bean
-	public Docket api() {
-		return new Docket(DocumentationType.SWAGGER_2).groupName("E-Platform").select()
-				.apis(RequestHandlerSelectors.basePackage("com.elearningplatformservices"))
-				.paths(any()).build().apiInfo(new ApiInfo("Platform",
-						"Electronic Learning Platform", "1.0.0", null,
-						new Contact("Fortech",null, null),null, null));
-	}
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2).groupName("E-Platform").select()
+                .apis(RequestHandlerSelectors.basePackage("com.elearningplatformservices"))
+                .paths(any()).build().apiInfo(new ApiInfo("Platform",
+                        "Electronic Learning Platform", "1.0.0", null,
+                        new Contact("Fortech", null, null), null, null));
+    }
 }

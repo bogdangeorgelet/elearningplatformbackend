@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,7 +24,11 @@ public class InstructorEntity {
     private String email;
     private Date dateCreated;
 
-    public InstructorEntity() {}
+    @OneToMany(mappedBy = "instructor")
+    private List<CourseEntity> courses;
+
+    public InstructorEntity() {
+    }
 
     public InstructorDto toDto() {
         InstructorDto instructorDto = new InstructorDto();
@@ -34,7 +39,6 @@ public class InstructorEntity {
         instructorDto.setPassword(this.password);
         instructorDto.setEmail(this.email);
         instructorDto.setDateCreated(this.dateCreated);
-
         return instructorDto;
     }
 
@@ -46,7 +50,6 @@ public class InstructorEntity {
         this.email = instructorDto.getEmail();
         this.password = instructorDto.getPassword();
         this.dateCreated = instructorDto.getDateCreated();
-
         return this;
     }
 }

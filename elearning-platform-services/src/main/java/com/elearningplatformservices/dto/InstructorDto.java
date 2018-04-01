@@ -19,5 +19,6 @@ public class InstructorDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private Date dateCreated;
 
-    public InstructorDto() {}
+    public InstructorDto() {
+    }
 }

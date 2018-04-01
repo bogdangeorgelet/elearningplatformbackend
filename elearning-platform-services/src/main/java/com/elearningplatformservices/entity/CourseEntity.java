@@ -23,9 +23,12 @@ public class CourseEntity {
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name="instructor_id")
+    private InstructorEntity instructor;
+
     public CourseEntity() {
     }
-
 
     public CourseDto toDto() {
         CourseDto dto = new CourseDto();
