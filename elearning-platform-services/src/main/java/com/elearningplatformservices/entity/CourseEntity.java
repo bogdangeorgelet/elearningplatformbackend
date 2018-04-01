@@ -19,7 +19,7 @@ public class CourseEntity {
     private String course_type;
     private Double price;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     private CustomerEntity customer;
 
@@ -36,7 +36,6 @@ public class CourseEntity {
         dto.setName(this.name);
         dto.setCourse_type(this.course_type);
         dto.setPrice(this.price);
-        dto.setCustomer(this.customer);
         return dto;
     }
 
@@ -45,8 +44,6 @@ public class CourseEntity {
         this.name = courseDto.getName();
         this.course_type = courseDto.getCourse_type();
         this.price = courseDto.getPrice();
-        this.customer = courseDto.getCustomer();
         return this;
     }
-
 }

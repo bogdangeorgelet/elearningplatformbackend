@@ -10,7 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "customer")
+@Table(name = "customers")
 public class CustomerEntity {
 
     @Id
@@ -23,7 +23,7 @@ public class CustomerEntity {
     private String address;
     private String phoneNumber;
 
-    @OneToMany
+    @OneToMany(mappedBy = "customer")
     private List<CourseEntity> courses;
 
     public CustomerEntity() {
@@ -53,5 +53,4 @@ public class CustomerEntity {
         this.courses = customerDto.getCourses();
         return this;
     }
-
 }
