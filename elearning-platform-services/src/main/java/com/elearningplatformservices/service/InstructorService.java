@@ -6,24 +6,29 @@ import com.elearningplatformservices.repository.IInstructorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class InstructorService {
 
-    private IInstructorRepository IInstructorRepository;
+    private IInstructorRepository instructorRepository;
 
     @Autowired
-    public InstructorService(IInstructorRepository IInstructorRepository) {
-        this.IInstructorRepository = IInstructorRepository;
+    public InstructorService(IInstructorRepository instructorRepository) {
+        this.instructorRepository = instructorRepository;
     }
 
-    public Iterable<InstructorEntity> getAllInstructors() {
-        Iterable<InstructorEntity> instructorDtos;
-        instructorDtos = IInstructorRepository.findAll();
+    public List<InstructorDto> getAllInstructors() {
+        List<InstructorDto> instructorDtos = new ArrayList<>();
+        instructorRepository.findAll().forEach(instructorEntity -> {
+            instructorDtos.add(instructorEntity.toDto());
+        });
         return instructorDtos;
     }
 
     public InstructorDto getOneInstructor(Long id) {
-        InstructorEntity instructorEntity = IInstructorRepository.findOne(id);
+        InstructorEntity instructorEntity = instructorRepository.findOne(id);
         if (instructorEntity != null)
             return instructorEntity.toDto();
         else
@@ -32,20 +37,20 @@ public class InstructorService {
 
     public void addInstructor(InstructorDto instructorDto) {
         InstructorEntity instructorEntity = new InstructorEntity().update(instructorDto);
-        IInstructorRepository.save(instructorEntity);
+        instructorRepository.save(instructorEntity);
     }
 
     public void updateInstructor(Long id, InstructorDto instructorDto) {
-        InstructorEntity instructorEntity = IInstructorRepository.findOne(id);
+        InstructorEntity instructorEntity = instructorRepository.findOne(id);
         instructorEntity.setFirstName(instructorDto.getFirstName());
         instructorEntity.setLastName(instructorDto.getLastName());
         instructorEntity.setEmail(instructorDto.getEmail());
         instructorEntity.setPassword(instructorDto.getPassword());
         instructorEntity.setDateCreated(instructorDto.getDateCreated());
-        IInstructorRepository.save(instructorEntity);
+        instructorRepository.save(instructorEntity);
     }
 
     public void deleteInstructor(Long id) {
-        IInstructorRepository.delete(id);
+        instructorRepository.delete(id);
     }
 }
