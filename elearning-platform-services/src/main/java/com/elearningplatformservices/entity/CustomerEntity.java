@@ -42,7 +42,7 @@ public class CustomerEntity {
         return dto;
     }
 
-    public CustomerEntity toEntity(CustomerDto customerDto) {
+    public CustomerEntity update(CustomerDto customerDto) {
         this.id = customerDto.getId();
         this.username = customerDto.getUsername();
         this.password = customerDto.getPassword();

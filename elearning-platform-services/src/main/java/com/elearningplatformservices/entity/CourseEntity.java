@@ -39,7 +39,7 @@ public class CourseEntity {
         return dto;
     }
 
-    public CourseEntity toEntity(CourseDto courseDto) {
+    public CourseEntity update(CourseDto courseDto) {
         this.id = courseDto.getId();
         this.name = courseDto.getName();
         this.course_type = courseDto.getCourse_type();

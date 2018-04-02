@@ -42,7 +42,7 @@ public class InstructorEntity {
         return instructorDto;
     }
 
-    public InstructorEntity toEntity(InstructorDto instructorDto) {
+    public InstructorEntity update(InstructorDto instructorDto) {
         if (instructorDto.getId() != null)
             this.id = instructorDto.getId();
         this.firstName = instructorDto.getFirstName();

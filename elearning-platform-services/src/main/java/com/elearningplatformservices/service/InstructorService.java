@@ -6,9 +6,6 @@ import com.elearningplatformservices.repository.IInstructorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 @Service
 public class InstructorService {
 
@@ -34,7 +31,7 @@ public class InstructorService {
     }
 
     public void addInstructor(InstructorDto instructorDto) {
-        InstructorEntity instructorEntity = new InstructorEntity().toEntity(instructorDto);
+        InstructorEntity instructorEntity = new InstructorEntity().update(instructorDto);
         IInstructorRepository.save(instructorEntity);
     }
 

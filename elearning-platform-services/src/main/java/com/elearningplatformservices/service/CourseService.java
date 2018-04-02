@@ -4,15 +4,10 @@ import com.elearningplatformservices.dto.CourseDto;
 import com.elearningplatformservices.entity.CourseEntity;
 import com.elearningplatformservices.repository.ICourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -41,7 +36,7 @@ public class CourseService {
     }
 
     public void create(CourseDto newCourse) {
-        CourseEntity courseEntity = new CourseEntity().toEntity(newCourse);
+        CourseEntity courseEntity = new CourseEntity().update(newCourse);
         this.courseRepository.save(courseEntity);
     }
 
@@ -51,7 +46,7 @@ public class CourseService {
         courseEntity.setName(courseDto.getName());
         courseEntity.setPrice(courseDto.getPrice());
         courseEntity.setCourse_type(courseDto.getCourse_type());
-//        courseEntity.setCustomer(courseDto.getCustomer());
+        courseEntity.setCustomer(courseDto.getCustomer());
         courseRepository.save(courseEntity);
     }
 

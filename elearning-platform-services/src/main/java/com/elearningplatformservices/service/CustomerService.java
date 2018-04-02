@@ -4,15 +4,10 @@ import com.elearningplatformservices.dto.CustomerDto;
 import com.elearningplatformservices.entity.CustomerEntity;
 import com.elearningplatformservices.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
@@ -40,7 +35,7 @@ public class CustomerService {
     }
 
     public void create(CustomerDto newCustomer) {
-        CustomerEntity customerEntity = new CustomerEntity().toEntity(newCustomer);
+        CustomerEntity customerEntity = new CustomerEntity().update(newCustomer);
         customerRepository.save(customerEntity);
     }
 
@@ -52,7 +47,7 @@ public class CustomerService {
         customerEntity.setEmail(updatedCustomer.getEmail());
         customerEntity.setAddress(updatedCustomer.getAddress());
         customerEntity.setPhoneNumber(updatedCustomer.getPhoneNumber());
-//        customerEntity.setCourses(updatedCustomer.getCourses());
+        customerEntity.setCourses(updatedCustomer.getCourses());
         customerRepository.save(customerEntity);
     }
 
