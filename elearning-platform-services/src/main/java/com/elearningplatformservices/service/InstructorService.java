@@ -36,7 +36,7 @@ public class InstructorService {
     }
 
     public void addInstructor(InstructorDto instructorDto) {
-        InstructorEntity instructorEntity = new InstructorEntity("Jack", "Bauer", "abcd1234", "sebastiancontras@gmail.com", "2018-04-23").update(instructorDto);
+        InstructorEntity instructorEntity = new InstructorEntity().update(instructorDto);
         instructorRepository.save(instructorEntity);
     }
 
