@@ -27,7 +27,7 @@ public class InstructorEntity {
     @OneToMany(mappedBy = "instructor")
     private List<CourseEntity> courses;
 
-    public InstructorEntity() {
+    public InstructorEntity(String jack, String bauer, String abcd1234, String s, String s1) {
     }
 
     public InstructorDto toDto() {
