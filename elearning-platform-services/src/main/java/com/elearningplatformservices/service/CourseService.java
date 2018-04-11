@@ -1,13 +1,19 @@
 package com.elearningplatformservices.service;
 
 import com.elearningplatformservices.dto.CourseDto;
+import com.elearningplatformservices.dto.CustomerDto;
 import com.elearningplatformservices.entity.CourseEntity;
+import com.elearningplatformservices.entity.CustomerEntity;
 import com.elearningplatformservices.repository.ICourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class CourseService {
@@ -25,6 +31,23 @@ public class CourseService {
             allCourses.add(courseEntity.toDto());
         });
         return allCourses;
+    }
+
+    public List<CourseDto> getAllCoursesByInstructor(String firstName) {
+        List<CourseEntity> allCourses = this.courseRepository
+                .findAllCoursesByInstructorFirstName(firstName);
+        return allCourses.stream()
+                .map(CourseEntity::toDto)
+                .collect(toList());
+    }
+
+    public ResponseEntity<List<CustomerEntity>> getCourseByCustomer(String username) {
+        if (this.courseRepository.findCourseByCustomerUsername(username) != null) {
+            return new ResponseEntity<>((List<CustomerEntity>) this.courseRepository.findCourseByCustomerUsername(username)
+                    .getCustomer(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     public CourseDto getOne(Long id) {

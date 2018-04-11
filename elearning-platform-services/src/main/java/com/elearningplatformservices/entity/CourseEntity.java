@@ -1,10 +1,12 @@
 package com.elearningplatformservices.entity;
 
 import com.elearningplatformservices.dto.CourseDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,9 +21,11 @@ public class CourseEntity {
     private String course_type;
     private Double price;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
-    private CustomerEntity customer;
+    @ManyToMany(fetch=FetchType.LAZY)
+    @JoinTable(name = "course_customer",
+            joinColumns = @JoinColumn(name = "courses_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
+    private List<CustomerEntity> customer;
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="instructor_id")
@@ -36,6 +40,8 @@ public class CourseEntity {
         dto.setName(this.name);
         dto.setCourse_type(this.course_type);
         dto.setPrice(this.price);
+        dto.setInstructor(this.instructor);
+        dto.setCustomer(this.customer);
         return dto;
     }
 
@@ -44,6 +50,8 @@ public class CourseEntity {
         this.name = courseDto.getName();
         this.course_type = courseDto.getCourse_type();
         this.price = courseDto.getPrice();
+        this.instructor=courseDto.getInstructor();
+        this.customer=courseDto.getCustomer();
         return this;
     }
 }

@@ -1,6 +1,7 @@
 package com.elearningplatformservices.api;
 
 import com.elearningplatformservices.dto.CourseDto;
+import com.elearningplatformservices.entity.CustomerEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,12 @@ public interface ICourseEndpoint {
 
     @GetMapping
     List<CourseDto> getAll();
+
+    @GetMapping("/allBy/{firstName}")
+    List<CourseDto> getAllCoursesByInstructorFirstName(String firstName);
+
+    @GetMapping("/allBy/customer/{username}")
+    ResponseEntity<List<CustomerEntity>> getCourseByCustomerUsername(String username);
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.NOT_FOUND)

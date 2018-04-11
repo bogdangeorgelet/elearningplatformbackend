@@ -16,7 +16,7 @@ import java.util.List;
 public class InstructorEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
@@ -39,6 +39,7 @@ public class InstructorEntity {
         instructorDto.setPassword(this.password);
         instructorDto.setEmail(this.email);
         instructorDto.setDateCreated(this.dateCreated);
+        instructorDto.setCourses(this.courses);
         return instructorDto;
     }
 
@@ -50,6 +51,7 @@ public class InstructorEntity {
         this.email = instructorDto.getEmail();
         this.password = instructorDto.getPassword();
         this.dateCreated = instructorDto.getDateCreated();
+        this.courses = instructorDto.getCourses();
         return this;
     }
 }
