@@ -43,7 +43,7 @@ public class CourseService {
 
     public ResponseEntity<List<CustomerEntity>> getCourseByCustomer(String username) {
         if (this.courseRepository.findCourseByCustomerUsername(username) != null) {
-            return new ResponseEntity<>((List<CustomerEntity>) this.courseRepository.findCourseByCustomerUsername(username)
+            return new ResponseEntity<>(this.courseRepository.findCourseByCustomerUsername(username)
                     .getCustomer(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

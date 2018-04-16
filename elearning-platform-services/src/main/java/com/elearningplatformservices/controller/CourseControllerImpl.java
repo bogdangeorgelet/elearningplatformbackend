@@ -31,9 +31,9 @@ public class CourseControllerImpl implements ICourseEndpoint {
         return courseService.getAllCoursesByInstructor(firstName);
     }
 
-    public ResponseEntity<List<CustomerEntity>> getCourseByCustomerUsername(String username) {
-        return courseService.getCourseByCustomer(username);
-    }
+//    public ResponseEntity<List<CustomerEntity>> getCourseByCustomerUsername(String username) {
+//        return courseService.getCourseByCustomer(username);
+//    }
 
     public ResponseEntity<CourseDto> getOne(@PathVariable Long id) {
         CourseDto courseDto = courseService.getOne(id);

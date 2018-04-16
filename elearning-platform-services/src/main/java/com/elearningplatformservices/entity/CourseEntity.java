@@ -23,7 +23,7 @@ public class CourseEntity {
 
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name = "course_customer",
-            joinColumns = @JoinColumn(name = "courses_id", referencedColumnName = "id"),
+            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
     private List<CustomerEntity> customer;
 
