@@ -21,10 +21,14 @@ public class CourseEntity {
     private String course_type;
     private Double price;
 
+//    @ManyToMany(fetch=FetchType.LAZY)
+//    @JoinTable(name = "course_customer",
+//            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+//            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
+//    private List<CustomerEntity> customer;
+
     @ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(name = "course_customer",
-            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
+    @JoinColumn(name = "customer_id")
     private List<CustomerEntity> customer;
 
     @ManyToOne(fetch=FetchType.LAZY)

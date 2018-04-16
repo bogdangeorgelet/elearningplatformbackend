@@ -24,7 +24,7 @@ public class CustomerEntity {
     private String address;
     private String phoneNumber;
 
-    @ManyToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer")
     private List<CourseEntity> courses;
 
     public CustomerEntity() {
