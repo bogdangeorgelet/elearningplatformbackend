@@ -12,16 +12,22 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "instructors")
+@Table(name = "INSTRUCTORS")
 public class InstructorEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+    @Column(name = "FIRSTNAME")
     private String firstName;
+    @Column(name = "LASTNAME")
     private String lastName;
+    @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "EMAIL")
     private String email;
+    @Column(name = "DATE_CREATED")
     private Date dateCreated;
 
     @OneToMany(mappedBy = "instructor")

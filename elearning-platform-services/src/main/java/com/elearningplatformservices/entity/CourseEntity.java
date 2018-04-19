@@ -11,28 +11,28 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "courses")
+@Table(name = "COURSES")
 public class CourseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+    @Column(name = "NAME")
     private String name;
+    @Column(name = "COURSE_TYPE")
     private String course_type;
+    @Column(name = "PRICE")
     private Double price;
 
-//    @ManyToMany(fetch=FetchType.LAZY)
-//    @JoinTable(name = "course_customer",
-//            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
-//    private List<CustomerEntity> customer;
-
     @ManyToMany(fetch=FetchType.LAZY)
-    @JoinColumn(name = "customer_id")
+    @JoinTable(name = "COURSES_CUSTOMER",
+            joinColumns = @JoinColumn(name = "COURSES_ID", referencedColumnName = "ID"),
+            inverseJoinColumns = @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID"))
     private List<CustomerEntity> customer;
 
     @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="instructor_id")
+    @JoinColumn(name="INSTRUCTOR_ID")
     private InstructorEntity instructor;
 
     public CourseEntity() {

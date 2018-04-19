@@ -1,9 +1,11 @@
-INSERT INTO instructors (id, first_name,last_name, password, email, date_created)
-VALUES (1, 'Jack', 'Bauer', 'qwerty1234', 'jackbauer@gmail.com','2018-04-12');
+INSERT INTO INSTRUCTORS (ID, FIRSTNAME, LASTNAME, PASSWORD, EMAIL, DATE_CREATED)
+VALUES (1, 'Jack', 'Bauer', 'qwerty1234', 'jackbauer@gmail.com', '2018-04-12');
 
-INSERT INTO customers (id, username, password, full_name, email, address, phone_number)
+INSERT INTO CUSTOMERS (ID, FULLNAME, USERNAME, PASSWORD, EMAIL, ADDRESS, PHONE_NUMBER)
 VALUES (1, 'carolinedietmar', 'abcd1234', 'Caroline Dietmar', 'carolinedietmar@gmail.com', 'Str. Nufarului', '0720123456');
 
-INSERT INTO courses (id, course_type, name, price, customer_id, instructor_id)
-VALUES (1, 'IT', 'Angular 2 for beginners', '99.9', '1', '1');
+INSERT INTO COURSES (ID, NAME, COURSE_TYPE, PRICE, INSTRUCTOR_ID)
+VALUES (1, 'IT', 'Angular 2 for beginners', '99.9', '1');
 
+INSERT INTO COURSES_CUSTOMER (COURSES_ID, CUSTOMER_ID)
+VALUES ('1', '1');

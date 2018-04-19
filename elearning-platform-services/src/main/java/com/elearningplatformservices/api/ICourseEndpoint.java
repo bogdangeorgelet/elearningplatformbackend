@@ -19,8 +19,8 @@ public interface ICourseEndpoint {
     @GetMapping("/allBy/{firstName}")
     List<CourseDto> getAllCoursesByInstructorFirstName(String firstName);
 
-//    @GetMapping("/allBy/customer/{username}")
-//    ResponseEntity<List<CustomerEntity>> getCourseByCustomerUsername(String username);
+    @GetMapping("/byCustomer/{username}")
+    ResponseEntity<List<CustomerEntity>> getCoursesByCustomerUsername(String username);
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.NOT_FOUND)
