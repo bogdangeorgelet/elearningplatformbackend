@@ -10,5 +10,5 @@ import java.util.List;
 public interface ICourseRepository extends JpaRepository<CourseEntity, Long> {
     List<CourseEntity> findAllCoursesByInstructorFirstName(String firstName);
 
-    CourseEntity findCourseByCustomerUsername(String username);
+    CourseEntity findCoursesByCustomerUsername(String username);
 }

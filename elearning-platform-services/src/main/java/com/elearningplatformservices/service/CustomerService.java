@@ -35,8 +35,10 @@ public class CustomerService {
     }
 
     public void create(CustomerDto newCustomer) {
-        CustomerEntity customerEntity = new CustomerEntity().update(newCustomer);
-        customerRepository.save(customerEntity);
+        if (newCustomer != null && this.customerRepository.findByUsername(newCustomer.getUsername()) == null) {
+            CustomerEntity customerEntity = new CustomerEntity().update(newCustomer);
+            customerRepository.save(customerEntity);
+        }
     }
 
     public void update(Long id, CustomerDto updatedCustomer) {
@@ -47,7 +49,7 @@ public class CustomerService {
         customerEntity.setEmail(updatedCustomer.getEmail());
         customerEntity.setAddress(updatedCustomer.getAddress());
         customerEntity.setPhoneNumber(updatedCustomer.getPhoneNumber());
-//        customerEntity.setCourses(updatedCustomer.getCourses());
+        customerEntity.setCourses(updatedCustomer.getCourses());
         customerRepository.save(customerEntity);
     }
 
