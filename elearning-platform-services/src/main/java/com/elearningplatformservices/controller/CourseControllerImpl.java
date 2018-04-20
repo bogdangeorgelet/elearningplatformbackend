@@ -27,6 +27,8 @@ public class CourseControllerImpl implements ICourseEndpoint {
         return courseService.getAllCourses();
     }
 
+    // TODO implement courseByCustomerUsername
+
     public List<CourseDto> getAllCoursesByInstructorFirstName(@PathVariable String firstName) {
         return courseService.getAllCoursesByInstructor(firstName);
     }
