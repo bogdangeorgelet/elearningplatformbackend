@@ -27,11 +27,11 @@ public class CourseControllerImpl implements ICourseEndpoint {
         return courseService.getAllCourses();
     }
 
-    public List<CourseDto> getAllCoursesByInstructorFirstName(String firstName) {
+    public List<CourseDto> getAllCoursesByInstructorFirstName(@PathVariable String firstName) {
         return courseService.getAllCoursesByInstructor(firstName);
     }
 
-    public ResponseEntity<List<CustomerEntity>> getCoursesByCustomerUsername(String username) {
+    public ResponseEntity<List<CustomerEntity>> getCoursesByCustomerUsername(@PathVariable String username) {
         return courseService.getCourseByCustomer(username);
     }
 

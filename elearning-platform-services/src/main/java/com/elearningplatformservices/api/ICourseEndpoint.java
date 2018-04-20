@@ -17,10 +17,10 @@ public interface ICourseEndpoint {
     List<CourseDto> getAll();
 
     @GetMapping("/allBy/{firstName}")
-    List<CourseDto> getAllCoursesByInstructorFirstName(String firstName);
+    List<CourseDto> getAllCoursesByInstructorFirstName(@PathVariable String firstName);
 
     @GetMapping("/byCustomer/{username}")
-    ResponseEntity<List<CustomerEntity>> getCoursesByCustomerUsername(String username);
+    ResponseEntity<List<CustomerEntity>> getCoursesByCustomerUsername(@PathVariable String username);
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.NOT_FOUND)
