@@ -31,7 +31,7 @@ public class CustomerEntity {
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
-    @ManyToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer")
     private List<CourseEntity> courses;
 
     public CustomerEntity() {
