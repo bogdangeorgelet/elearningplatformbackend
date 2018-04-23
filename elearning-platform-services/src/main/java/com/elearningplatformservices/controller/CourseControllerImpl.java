@@ -3,6 +3,7 @@ package com.elearningplatformservices.controller;
 import com.elearningplatformservices.api.ICourseEndpoint;
 import com.elearningplatformservices.dto.CourseDto;
 import com.elearningplatformservices.entity.CustomerEntity;
+import com.elearningplatformservices.enums.CourseCategories;
 import com.elearningplatformservices.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,10 @@ public class CourseControllerImpl implements ICourseEndpoint {
 
     public ResponseEntity<List<CustomerEntity>> getCoursesByCustomerUsername(@PathVariable String username) {
         return courseService.getCourseByCustomer(username);
+    }
+
+    public List<CourseDto> getAllByCategory(@PathVariable CourseCategories category) {
+        return courseService.getByCategory(category);
     }
 
     public ResponseEntity<CourseDto> getOne(@PathVariable Long id) {

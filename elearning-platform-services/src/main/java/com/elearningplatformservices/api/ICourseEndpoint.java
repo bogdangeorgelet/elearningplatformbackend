@@ -2,6 +2,7 @@ package com.elearningplatformservices.api;
 
 import com.elearningplatformservices.dto.CourseDto;
 import com.elearningplatformservices.entity.CustomerEntity;
+import com.elearningplatformservices.enums.CourseCategories;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,9 @@ public interface ICourseEndpoint {
 
     @GetMapping("/byCustomer/{username}")
     ResponseEntity<List<CustomerEntity>> getCoursesByCustomerUsername(@PathVariable String username);
+
+    @GetMapping("/getAllByCategory/{category}")
+    List<CourseDto> getAllByCategory(@PathVariable CourseCategories category);
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.NOT_FOUND)

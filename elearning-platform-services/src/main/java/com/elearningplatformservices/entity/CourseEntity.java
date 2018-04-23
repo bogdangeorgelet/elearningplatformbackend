@@ -1,6 +1,7 @@
 package com.elearningplatformservices.entity;
 
 import com.elearningplatformservices.dto.CourseDto;
+import com.elearningplatformservices.enums.CourseCategories;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,9 @@ public class CourseEntity {
     private String course_type;
     @Column(name = "PRICE")
     private Double price;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "CATEGORY")
+    private CourseCategories category;
 
     @ManyToMany(fetch=FetchType.LAZY)
     @JoinTable(name = "COURSES_CUSTOMER",

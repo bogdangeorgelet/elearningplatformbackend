@@ -4,14 +4,17 @@ import com.elearningplatformservices.dto.CourseDto;
 import com.elearningplatformservices.dto.CustomerDto;
 import com.elearningplatformservices.entity.CourseEntity;
 import com.elearningplatformservices.entity.CustomerEntity;
+import com.elearningplatformservices.enums.CourseCategories;
 import com.elearningplatformservices.repository.ICourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -48,6 +51,13 @@ public class CourseService {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    public List<CourseDto> getByCategory(CourseCategories category) {
+        List<CourseEntity> all = this.courseRepository.findAllByCategory(category);
+        return all.stream()
+                .map(CourseEntity::toDto)
+                .collect(Collectors.toList());
     }
 
     public CourseDto getOne(Long id) {
