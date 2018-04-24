@@ -1,6 +1,7 @@
 package com.elearningplatformservices.entity;
 
 import com.elearningplatformservices.dto.CustomerDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,17 +11,24 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "customers")
+@Table(name = "CUSTOMERS")
 public class CustomerEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
-    private String username;
-    private String password;
+    @Column(name = "FULLNAME")
     private String fullName;
+    @Column(name = "USERNAME")
+    private String username;
+    @Column(name = "PASSWORD")
+    private String password;
+    @Column(name = "EMAIL")
     private String email;
+    @Column(name = "ADDRESS")
     private String address;
+    @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
     @OneToMany(mappedBy = "customer")

@@ -12,16 +12,22 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Table(name = "instructors")
+@Table(name = "INSTRUCTORS")
 public class InstructorEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private Long id;
+    @Column(name = "FIRSTNAME")
     private String firstName;
+    @Column(name = "LASTNAME")
     private String lastName;
+    @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "EMAIL")
     private String email;
+    @Column(name = "DATE_CREATED")
     private Date dateCreated;
 
     @OneToMany(mappedBy = "instructor")
@@ -39,6 +45,7 @@ public class InstructorEntity {
         instructorDto.setPassword(this.password);
         instructorDto.setEmail(this.email);
         instructorDto.setDateCreated(this.dateCreated);
+        instructorDto.setCourses(this.courses);
         return instructorDto;
     }
 
@@ -50,6 +57,7 @@ public class InstructorEntity {
         this.email = instructorDto.getEmail();
         this.password = instructorDto.getPassword();
         this.dateCreated = instructorDto.getDateCreated();
+        this.courses = instructorDto.getCourses();
         return this;
     }
 }
