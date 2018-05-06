@@ -11,16 +11,17 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    http
-      .cors()
-    .and()
-      .authorizeRequests()
-        .antMatchers("/index.html", "/", "/home", "/login", "/course", "/instructors", "/customer").permitAll()
-        .anyRequest().authenticated()
-    .and()
-      .csrf()
-      .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-  }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .cors()
+            .and()
+                .authorizeRequests()
+                .antMatchers("/index.html", "/", "/home", "/login", "/course/**", "/instructors/**", "/customer/**").permitAll()
+                .anyRequest().authenticated()
+            .and()
+                .csrf()
+                .disable();
+//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+    }
 }
