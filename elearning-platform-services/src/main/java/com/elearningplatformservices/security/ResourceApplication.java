@@ -4,6 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.Map;
+
 
 @RestController
 public class ResourceApplication {
@@ -13,6 +17,11 @@ public class ResourceApplication {
     allowedHeaders = { "x-auth-token", "x-requested-with", "x-xsrf-token" })
   public Message home() {
     return new Message("Hello You");
+  }
+
+  @RequestMapping("/token")
+  public Map<String,String> token(HttpSession session) {
+    return Collections.singletonMap("token", session.getId());
   }
 
   @Bean
