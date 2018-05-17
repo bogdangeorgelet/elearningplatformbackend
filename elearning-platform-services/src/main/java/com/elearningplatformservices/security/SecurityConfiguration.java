@@ -15,14 +15,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors()
-            .and()
+                .and()
                 .authorizeRequests()
                 .antMatchers("/index.html", "/", "/home", "/login", "/course/**", "/instructors/**", "/customer/**").permitAll()
                 .anyRequest().authenticated()
-            .and()
+                .and()
                 .csrf()
                 .disable();
-//                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
     }
 }

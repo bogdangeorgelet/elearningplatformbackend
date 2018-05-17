@@ -2,31 +2,38 @@ package com.elearningplatformservices.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.session.web.http.HeaderHttpSessionStrategy;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
-@RestController
+@Controller
 public class ResourceApplication {
 
-  @RequestMapping("/")
-  @CrossOrigin(origins = "*", maxAge = 3600,
-    allowedHeaders = { "x-auth-token", "x-requested-with", "x-xsrf-token" })
-  public Message home() {
-    return new Message("Hello You");
+  @GetMapping("/user")
+  @ResponseBody
+  public Principal user(Principal user) {
+    return user;
   }
 
-  @RequestMapping("/token")
-  public Map<String,String> token(HttpSession session) {
-    return Collections.singletonMap("token", session.getId());
+  @GetMapping("/resource")
+  @ResponseBody
+  public Map<String, Object> home() {
+    Map<String, Object> model = new HashMap<String, Object>();
+    model.put("id", UUID.randomUUID().toString());
+    model.put("content", "Hello World");
+    return model;
   }
 
-  @Bean
-  HeaderHttpSessionStrategy sessionStrategy() {
-    return new HeaderHttpSessionStrategy();
+  @GetMapping(value = "/{path:[^\\.]*}")
+  public String redirect() {
+    return "forward:/";
   }
 
 }
