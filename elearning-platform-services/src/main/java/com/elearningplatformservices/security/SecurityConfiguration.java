@@ -14,14 +14,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors()
-                .and()
+                .httpBasic()
+            .and()
                 .authorizeRequests()
-                .antMatchers("/index.html", "/", "/home", "/login", "/course/**", "/instructors/**", "/customer/**").permitAll()
+                .antMatchers("/index.html", "/**", "/home", "/login", "/course/**", "/instructors/**", "/customer/**", "/user/**", "/resource/**").permitAll()
                 .anyRequest().authenticated()
-                .and()
+            .and()
                 .csrf()
-                .disable();
+                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
     }
 }
