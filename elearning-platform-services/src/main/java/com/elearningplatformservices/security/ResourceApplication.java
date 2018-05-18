@@ -10,6 +10,7 @@ import java.util.UUID;
 
 
 @Controller
+@CrossOrigin
 public class ResourceApplication {
 
   @GetMapping("/user")
