@@ -1,19 +1,16 @@
 package com.elearningplatformservices.security;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.session.web.http.HeaderHttpSessionStrategy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.security.Principal;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 
 @Controller
+@CrossOrigin
 public class ResourceApplication {
 
   @GetMapping("/user")
