@@ -61,4 +61,12 @@ public class CustomerEntity {
         this.courses = customerDto.getCourses();
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "CustomerEntity{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                '}';
+    }
 }
