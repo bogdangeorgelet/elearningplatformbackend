@@ -17,11 +17,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .httpBasic()
             .and()
                 .authorizeRequests()
-                .antMatchers("/index.html", "/", "/home", "/login", "/course/**", "/instructors/**", "/customer/**", "/form/**", "/load/**", "/user/**", "/resource/**").permitAll()
+                .antMatchers("/index.html", "/", "/home", "/login", "/course/**", "/instructors/**", "/customer/**", "/form", "/form/**", "/load/**", "/user/**", "/resource/**").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .csrf()
-                .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                .disable();
 
     }
 }
