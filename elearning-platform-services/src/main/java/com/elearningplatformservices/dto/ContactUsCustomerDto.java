@@ -15,6 +15,7 @@ public class ContactUsCustomerDto {
     private String email;
     private String country;
     private String phoneNumber;
+    private String message;
 
     public ContactUsCustomerDto() {
     }
