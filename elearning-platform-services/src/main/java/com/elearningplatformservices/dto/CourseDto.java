@@ -20,6 +20,7 @@ public class CourseDto {
     private Double price;
     private CourseCategories category;
     @JsonIgnore
+//    private CustomerEntity customer;
     private List<CustomerEntity> customer;
     @JsonIgnore
     private InstructorEntity instructor;

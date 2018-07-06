@@ -2,6 +2,7 @@ package com.elearningplatformservices.entity;
 
 
 import com.elearningplatformservices.dto.InstructorDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -30,7 +31,8 @@ public class InstructorEntity {
     @Column(name = "DATE_CREATED")
     private Date dateCreated;
 
-    @OneToMany(mappedBy = "instructor")
+    @OneToMany(mappedBy = "instructor", cascade = CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+    @JsonIgnore
     private List<CourseEntity> courses;
 
     public InstructorEntity() {

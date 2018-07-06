@@ -1,6 +1,7 @@
 package com.elearningplatformservices.dto;
 
 import com.elearningplatformservices.entity.CourseEntity;
+import com.elearningplatformservices.entity.InstructorEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
@@ -25,6 +26,16 @@ public class InstructorDto {
     private Date dateCreated;
 
     public InstructorDto() {
+    }
+
+    public InstructorEntity toEntity() {
+        InstructorEntity entity = new InstructorEntity();
+        entity.setId(this.id);
+        entity.setFirstName(this.firstName);
+        entity.setLastName(this.lastName);
+        entity.setPassword(this.password);
+        entity.setEmail(this.email);
+        return entity;
     }
 
 }

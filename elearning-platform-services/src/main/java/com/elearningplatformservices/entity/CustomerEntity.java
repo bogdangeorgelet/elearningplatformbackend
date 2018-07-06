@@ -31,7 +31,8 @@ public class CustomerEntity {
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "customer")
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+    @JsonIgnore
     private List<CourseEntity> courses;
 
     public CustomerEntity() {

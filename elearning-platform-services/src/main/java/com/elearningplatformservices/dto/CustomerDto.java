@@ -19,10 +19,22 @@ public class CustomerDto {
     private String email;
     private String address;
     private String phoneNumber;
-    @JsonIgnore
+//    @JsonIgnore
     private List<CourseEntity> courses;
 
+
     public CustomerDto() {
+    }
+
+    public CustomerEntity toEntity() {
+        CustomerEntity entity = new CustomerEntity();
+        entity.setId(this.id);
+        entity.setFullName(this.fullName);
+        entity.setUsername(this.username);
+        entity.setEmail(this.email);
+        entity.setAddress(this.address);
+        entity.setPhoneNumber(this.phoneNumber);
+        return entity;
     }
 
 }

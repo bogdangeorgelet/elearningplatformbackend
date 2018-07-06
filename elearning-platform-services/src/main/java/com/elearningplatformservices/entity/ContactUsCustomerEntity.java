@@ -33,15 +33,19 @@ public class ContactUsCustomerEntity {
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
 
+    @Column(name = "MESSAGE")
+    private String message;
+
     public ContactUsCustomerEntity() {
     }
 
-    public ContactUsCustomerEntity(String firstName, String lastName, String email, String country, String phoneNumber) {
+    public ContactUsCustomerEntity(String firstName, String lastName, String email, String country, String phoneNumber, String message) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.country = country;
         this.phoneNumber = phoneNumber;
+        this.message = message;
     }
 
     public ContactUsCustomerDto toDto() {
@@ -52,6 +56,7 @@ public class ContactUsCustomerEntity {
         dto.setEmail(this.email);
         dto.setCountry(this.country);
         dto.setPhoneNumber(this.phoneNumber);
+        dto.setMessage(this.message);
         return dto;
     }
 
@@ -62,6 +67,7 @@ public class ContactUsCustomerEntity {
         this.email = contactUsCustomerDto.getEmail();
         this.country = contactUsCustomerDto.getCountry();
         this.phoneNumber = contactUsCustomerDto.getPhoneNumber();
+        this.message = contactUsCustomerDto.getMessage();
         return this;
     }
 

@@ -29,7 +29,7 @@ public class CourseEntity {
     @Column(name = "CATEGORY")
     private CourseCategories category;
 
-    @ManyToMany(fetch=FetchType.LAZY)
+    @ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "COURSES_CUSTOMER",
             joinColumns = @JoinColumn(name = "COURSES_ID", referencedColumnName = "ID"),
             inverseJoinColumns = @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID"))
@@ -37,6 +37,7 @@ public class CourseEntity {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="INSTRUCTOR_ID")
+    @JsonIgnore
     private InstructorEntity instructor;
 
     public CourseEntity() {
