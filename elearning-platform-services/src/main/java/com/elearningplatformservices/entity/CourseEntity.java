@@ -35,7 +35,7 @@ public class CourseEntity {
             inverseJoinColumns = @JoinColumn(name = "CUSTOMER_ID", referencedColumnName = "ID"))
     private List<CustomerEntity> customer;
 
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="INSTRUCTOR_ID")
     @JsonIgnore
     private InstructorEntity instructor;

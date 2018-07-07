@@ -1,5 +1,6 @@
 package com.elearningplatformservices.dto;
 
+import com.elearningplatformservices.entity.CourseEntity;
 import com.elearningplatformservices.entity.CustomerEntity;
 import com.elearningplatformservices.entity.InstructorEntity;
 import com.elearningplatformservices.enums.CourseCategories;
@@ -20,11 +21,22 @@ public class CourseDto {
     private Double price;
     private CourseCategories category;
     @JsonIgnore
-//    private CustomerEntity customer;
     private List<CustomerEntity> customer;
     @JsonIgnore
     private InstructorEntity instructor;
 
     public CourseDto() {
+    }
+    
+    public CourseEntity toEntity() {
+        CourseEntity entity = new CourseEntity();
+        entity.setId(this.id);
+        entity.setName(this.name);
+        entity.setCourse_type(course_type);
+        entity.setPrice(this.price);
+        entity.setCategory(this.category);
+        entity.setCustomer(this.customer);
+        entity.setInstructor(this.instructor);
+        return entity;
     }
 }

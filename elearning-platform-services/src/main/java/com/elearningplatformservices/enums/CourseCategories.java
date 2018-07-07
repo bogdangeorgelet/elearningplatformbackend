@@ -1,7 +1,9 @@
 package com.elearningplatformservices.enums;
 
-//<editor-fold desc="Getters and setters">
-//</editor-fold>
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
 public enum CourseCategories {
     PHP,
     JAVA,

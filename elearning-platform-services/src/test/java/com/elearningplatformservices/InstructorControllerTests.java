@@ -21,10 +21,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -140,6 +138,21 @@ public class InstructorControllerTests {
     }
 
     @Test
+    public void couldNotDeleteInstructor() throws Exception {
+        InstructorDto first = new InstructorDto();
+        first.setFirstName("Dan");
+        first.setLastName("Bogdan");
+        first.setPassword("password");
+        first.setEmail("example@gmail.com");
+        instructorRepository.save(first.toEntity());
+
+        this.mockMvc.perform(delete("/instructors/{id}", first.getId())
+            .contentType(contentType)
+            .content(json(first)))
+            .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
     public void createInstructor() throws Exception {
         InstructorDto first = new InstructorDto();
         first.setFirstName("Dan");
@@ -147,10 +160,38 @@ public class InstructorControllerTests {
         first.setPassword("password");
         first.setEmail("example@gmail.com");
 
-        mockMvc.perform(post("/instructors")
+        this.mockMvc.perform(post("/instructors")
             .contentType(contentType)
             .content(json(first)))
             .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void couldNotCreateInstructor() throws Exception {
+        InstructorDto first = new InstructorDto();
+        first.setFirstName(null);
+        first.setLastName(null);
+        first.setPassword(null);
+        first.setEmail(null);
+
+        this.mockMvc.perform(post("/instructor/add")
+            .contentType(contentType)
+            .content(json(first)))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void updateInstructor() throws Exception {
+        InstructorDto first = new InstructorDto();
+        first.setFirstName("Dan");
+        first.setLastName("Bogdan");
+        first.setPassword("password");
+        first.setEmail("example@gmail.com");
+
+        mockMvc.perform(put("/instructors/{id}", instructors.get(0).getId())
+            .contentType(contentType)
+            .content(json(first)))
+            .andExpect(status().isOk());
     }
 
     private String json(Object o) throws Exception {
