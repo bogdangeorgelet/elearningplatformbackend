@@ -162,6 +162,33 @@ public class CourseControllerTests {
             .andExpect(status().isOk());
     }
 
+    @Test
+    public void couldNotCreateCourse() throws Exception {
+        CourseDto first = new CourseDto();
+        first.setName("Dan");
+        first.setCourse_type("JAVA");
+        first.setPrice(10.00);
+        first.setCategory(JAVA);
+
+        this.mockMvc.perform(post("/courses/add")
+            .contentType(contentType)
+            .content(json(first)))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void couldNotUpdateCourse() throws Exception {
+        CourseDto first = new CourseDto();
+        first.setName(null);
+        first.setCourse_type(null);
+        first.setPrice(null);
+        first.setCategory(null);
+
+        this.mockMvc.perform(put("/courses/{id}", courses.get(0).getId().intValue())
+            .content(json(first))
+            .contentType(contentType))
+            .andExpect(status().isNotFound());
+    }
 
     private String json(Object o) throws Exception {
         MockHttpOutputMessage mockHttpOutputMessage = new MockHttpOutputMessage();
