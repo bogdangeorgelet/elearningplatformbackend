@@ -138,6 +138,12 @@ public class CustomerControllerTests {
     }
 
     @Test
+    public void getCustomerNotFound() throws Exception {
+        mockMvc.perform(get("/customer/{id}", 100))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
     public void deleteCustomer() throws Exception {
         mockMvc.perform(delete("/customer/{id}", customers.get(0).getId())
             .contentType(contentType).content(json(customers.get(0))))
@@ -209,6 +215,118 @@ public class CustomerControllerTests {
             .contentType(contentType)
             .content(json(first)))
             .andExpect(status().isOk());
+    }
+
+    @Test
+    public void updateWithoutUsername() throws Exception {
+        CustomerDto first = new CustomerDto();
+        first.setFullName("Name");
+        first.setPassword("pass");
+        first.setEmail("first@gmail.com");
+        first.setAddress("Str. Universitatii");
+        first.setPhoneNumber("0744353234");
+
+        this.mockMvc.perform(put("/customer/{id}", first.getId())
+            .contentType(contentType)
+            .content(json(first)))
+                .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
+    public void checkIfSameUsername() throws Exception {
+        CustomerDto first = new CustomerDto();
+        first.setFullName("Name");
+        first.setUsername("username");
+        first.setPassword("pass");
+        first.setEmail("first@gmail.com");
+        first.setAddress("Str. Universitatii");
+        first.setPhoneNumber("0744353234");
+
+        if(customerRepository.findByUsername(customers.get(0).getUsername()) != null) {
+            if (first.getUsername().equals(customerRepository.findByUsername(customers.get(0).getUsername()))) {
+                this.mockMvc.perform(put("/customer/{id}", customers.get(0).getId())
+                    .content(json(first))
+                    .contentType(contentType))
+                        .andExpect(status().isOk());
+            }
+        }
+    }
+
+    @Test
+    public void checkIfSameUsernameExists() throws Exception {
+        CustomerDto first = new CustomerDto();
+        first.setFullName("Name");
+        first.setUsername("username");
+        first.setPassword("pass");
+        first.setEmail("first@gmail.com");
+        first.setAddress("Str. Universitatii");
+        first.setPhoneNumber("0744353234");
+
+        if (customerRepository.findByUsername(customers.get(0).getUsername()).equals(true)) {
+            if (first.getUsername().equals(customerRepository.findByUsername(customers.get(0).getUsername()))) {
+                List<CustomerEntity> all = (List<CustomerEntity>) customerRepository.findAll();
+                if (all.stream().anyMatch(hmc -> hmc.getUsername().equals(first.getUsername()))) {
+                    this.mockMvc.perform(put("/customer/{id}", customers.get(0).getUsername())
+                        .contentType(contentType)
+                        .content(json(first)))
+                            .andExpect(status().isMethodNotAllowed());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void checkIfDifferentUsername() throws Exception {
+        CustomerDto first = new CustomerDto();
+        first.setFullName("Name");
+        first.setUsername("username");
+        first.setPassword("pass");
+        first.setEmail("first@gmail.com");
+        first.setAddress("Str. Universitatii");
+        first.setPhoneNumber("0744353234");
+
+        if (customerRepository.findByUsername(customers.get(0).getUsername()).equals(true)) {
+            if (first.getUsername().equals(customerRepository.findByUsername(customers.get(0).getUsername()))) {
+                this.mockMvc.perform(put("/customer/{id}", customers.get(0).getUsername())
+                    .content(json(first))
+                    .contentType(contentType))
+                        .andExpect(status().isOk());
+            }
+        }
+    }
+
+    @Test
+    public void checkIfusernameNotFound() throws Exception {
+        CustomerDto first = new CustomerDto();
+        first.setFullName("Name");
+        first.setUsername("username");
+        first.setPassword("pass");
+        first.setEmail("first@gmail.com");
+        first.setAddress("Str. Universitatii");
+        first.setPhoneNumber("0744353234");
+
+        if (customerRepository.findByUsername(customers.get(0).getUsername()).equals(false)) {
+            this.mockMvc.perform(put("/customer/{id}", customers.get(0).getUsername())
+                    .content(json(first))
+                    .contentType(contentType))
+                    .andExpect(status().isNotFound());
+        }
+    }
+
+    @Test
+    public void wrongPathUpdate() throws Exception {
+        CustomerDto first = new CustomerDto();
+        first.setFullName("Name");
+        first.setUsername("username");
+        first.setPassword("pass");
+        first.setEmail("first@gmail.com");
+        first.setAddress("Str. Universitatii");
+        first.setPhoneNumber("0744353234");
+
+        this.mockMvc.perform(put("/george/customer/{id}", first.getId())
+            .contentType(contentType)
+            .content(json(first)))
+                .andExpect(status().isNotFound());
     }
 
     private String json(Object o) throws Exception {
