@@ -37,7 +37,6 @@ public class CourseEntity {
 
     @ManyToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="INSTRUCTOR_ID")
-    @JsonIgnore
     private InstructorEntity instructor;
 
     public CourseEntity() {
@@ -49,6 +48,7 @@ public class CourseEntity {
         dto.setName(this.name);
         dto.setCourse_type(this.course_type);
         dto.setPrice(this.price);
+        dto.setCategory(this.category);
         dto.setInstructor(this.instructor);
         dto.setCustomer(this.customer);
         return dto;

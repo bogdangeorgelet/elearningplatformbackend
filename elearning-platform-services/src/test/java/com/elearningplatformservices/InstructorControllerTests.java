@@ -1,6 +1,5 @@
 package com.elearningplatformservices;
 
-import com.elearningplatformservices.dto.CustomerDto;
 import com.elearningplatformservices.dto.InstructorDto;
 import com.elearningplatformservices.entity.InstructorEntity;
 import com.elearningplatformservices.repository.IInstructorRepository;
@@ -19,6 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -29,6 +29,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 
 
 import java.nio.charset.Charset;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -78,12 +80,14 @@ public class InstructorControllerTests {
         first.setLastName("Bogdan");
         first.setPassword("password");
         first.setEmail("example@gmail.com");
+        first.setDateCreated(Date.valueOf(LocalDate.now()));
 
         InstructorDto second = new InstructorDto();
         second.setFirstName("John");
         second.setEmail("Doe");
         second.setPassword("password");
         second.setEmail("doe@gmail.com");
+        second.setDateCreated(Date.valueOf(LocalDate.now()));
 
         this.instructors.add(instructorRepository.save(first.toEntity()));
         this.instructors.add(instructorRepository.save(second.toEntity()));
@@ -109,7 +113,8 @@ public class InstructorControllerTests {
                 .andExpect(jsonPath("$.firstName", is(this.instructors.get(0).getFirstName())))
                 .andExpect(jsonPath("$.lastName", is(this.instructors.get(0).getLastName())))
                 .andExpect(jsonPath("$.password", is(this.instructors.get(0).getPassword())))
-                .andExpect(jsonPath("$.email", is(this.instructors.get(0).getEmail())));
+                .andExpect(jsonPath("$.email", is(this.instructors.get(0).getEmail())))
+                .andExpect(jsonPath("$.dateCreated", is(this.instructors.get(0).getDateCreated())));
     }
 
 
@@ -118,16 +123,19 @@ public class InstructorControllerTests {
         mockMvc.perform(get("/instructors"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(this.instructors.get(0).getId().intValue())))
                 .andExpect(jsonPath("$[0].firstName", is(this.instructors.get(0).getFirstName())))
                 .andExpect(jsonPath("$[0].lastName", is(this.instructors.get(0).getLastName())))
                 .andExpect(jsonPath("$[0].password", is(this.instructors.get(0).getPassword())))
                 .andExpect(jsonPath("$[0].email", is(this.instructors.get(0).getEmail())))
+                .andExpect(jsonPath("$[0].dateCreated", is(this.instructors.get(0).getDateCreated())))
                 .andExpect(jsonPath("$[1].id", is(this.instructors.get(1).getId().intValue())))
                 .andExpect(jsonPath("$[1].firstName", is(this.instructors.get(1).getFirstName())))
                 .andExpect(jsonPath("$[1].lastName", is(this.instructors.get(1).getLastName())))
                 .andExpect(jsonPath("$[1].password", is(this.instructors.get(1).getPassword())))
-                .andExpect(jsonPath("$[1].email", is(this.instructors.get(1).getEmail())));
+                .andExpect(jsonPath("$[1].email", is(this.instructors.get(1).getEmail())))
+                .andExpect(jsonPath("$[1].dateCreated", is(this.instructors.get(1).getDateCreated())));
     }
 
     @Test

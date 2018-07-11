@@ -262,7 +262,7 @@ public class CustomerControllerTests {
         first.setAddress("Str. Universitatii");
         first.setPhoneNumber("0744353234");
 
-        if (customerRepository.findByUsername(customers.get(0).getUsername()).equals(true)) {
+        if (customerRepository.findByUsername(customers.get(0).getUsername()) != null) {
             if (first.getUsername().equals(customerRepository.findByUsername(customers.get(0).getUsername()))) {
                 List<CustomerEntity> all = (List<CustomerEntity>) customerRepository.findAll();
                 if (all.stream().anyMatch(hmc -> hmc.getUsername().equals(first.getUsername()))) {
@@ -285,9 +285,9 @@ public class CustomerControllerTests {
         first.setAddress("Str. Universitatii");
         first.setPhoneNumber("0744353234");
 
-        if (customerRepository.findByUsername(customers.get(0).getUsername()).equals(true)) {
-            if (first.getUsername().equals(customerRepository.findByUsername(customers.get(0).getUsername()))) {
-                this.mockMvc.perform(put("/customer/{id}", customers.get(0).getUsername())
+        if (customerRepository.findByUsername(customers.get(0).getUsername()) != null) {
+            if (!first.getUsername().equals(customerRepository.findByUsername(customers.get(0).getUsername()))) {
+                this.mockMvc.perform(put("/customer/{id}", customers.get(0).getId())
                     .content(json(first))
                     .contentType(contentType))
                         .andExpect(status().isOk());

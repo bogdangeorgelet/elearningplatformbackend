@@ -39,4 +39,5 @@ public class CourseDto {
         entity.setInstructor(this.instructor);
         return entity;
     }
+
 }

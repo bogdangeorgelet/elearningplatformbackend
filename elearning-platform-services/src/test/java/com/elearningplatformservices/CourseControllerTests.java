@@ -1,9 +1,13 @@
 package com.elearningplatformservices;
 
 import com.elearningplatformservices.dto.CourseDto;
+import com.elearningplatformservices.dto.CustomerDto;
 import com.elearningplatformservices.entity.CourseEntity;
+import com.elearningplatformservices.entity.CustomerEntity;
+import com.elearningplatformservices.entity.InstructorEntity;
 import com.elearningplatformservices.enums.CourseCategories;
 import com.elearningplatformservices.repository.ICourseRepository;
+import com.elearningplatformservices.repository.ICustomerRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import static com.elearningplatformservices.enums.CourseCategories.JAVA;
+import static com.elearningplatformservices.enums.CourseCategories.JAVASCRIPT;
 import static org.junit.Assert.*;
 
 import java.nio.charset.Charset;
@@ -49,8 +54,13 @@ public class CourseControllerTests {
 
     private List<CourseEntity> courses = new ArrayList<>();
 
+    private List<CustomerEntity> customers = new ArrayList<>();
+
     @Autowired
     private ICourseRepository courseRepository;
+
+    @Autowired
+    private ICustomerRepository customerRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -74,18 +84,35 @@ public class CourseControllerTests {
         this.mockMvc = webAppContextSetup(webApplicationContext).build();
 
         this.courseRepository.deleteAll();
+        this.customerRepository.deleteAll();
+
+        CustomerDto customer1 = new CustomerDto();
+        customer1.setId(1L);
+        customer1.setFullName("Let Bogdan");
+        customer1.setUsername("lbogdan");
+
+        CustomerDto customer2 = new CustomerDto();
+        customer2.setId(2L);
+        customer2.setFullName("Pavel Dan");
+        customer2.setUsername("pavelDan");
 
         CourseDto first = new CourseDto();
         first.setName("Dan");
         first.setCourse_type("JAVA");
         first.setPrice(10.00);
         first.setCategory(JAVA);
+//        first.setInstructor(new InstructorEntity().getFirstName());
+//        first.setCustomer(Arrays.asList(customer));
 
         CourseDto second = new CourseDto();
         second.setName("Filip");
-        second.setCourse_type("JavaScript");
+        second.setCourse_type("JAVASCRIPT");
         second.setPrice(99.99);
-        second.setCategory(CourseCategories.JAVASCRIPT);
+        second.setCategory(JAVASCRIPT);
+        second.setInstructor(new InstructorEntity());
+
+        this.customers.add(this.customerRepository.save(customer1.toEntity()));
+        this.customers.add(this.customerRepository.save(customer2.toEntity()));
 
         this.courses.add(this.courseRepository.save(first.toEntity()));
         this.courses.add(this.courseRepository.save(second.toEntity()));
@@ -107,7 +134,8 @@ public class CourseControllerTests {
                 .andExpect(jsonPath("$.id", is(this.courses.get(0).getId().intValue())))
                 .andExpect(jsonPath("$.name", is(this.courses.get(0).getName())))
                 .andExpect(jsonPath("$.course_type", is(this.courses.get(0).getCourse_type())))
-                .andExpect(jsonPath("$.price", is(this.courses.get(0).getPrice())));
+                .andExpect(jsonPath("$.price", is(this.courses.get(0).getPrice())))
+                .andExpect(jsonPath("$.category", is( "JAVA")));
     }
 
     @Test
@@ -120,10 +148,18 @@ public class CourseControllerTests {
                 .andExpect(jsonPath("$[0].name", is(this.courses.get(0).getName())))
                 .andExpect(jsonPath("$[0].course_type", is(this.courses.get(0).getCourse_type())))
                 .andExpect(jsonPath("$[0].price", is(this.courses.get(0).getPrice())))
+                .andExpect(jsonPath("$[0].category", is("JAVA")))
                 .andExpect(jsonPath("$[1].id", is(this.courses.get(1).getId().intValue())))
                 .andExpect(jsonPath("$[1].name", is(this.courses.get(1).getName())))
                 .andExpect(jsonPath("$[1].course_type", is(this.courses.get(1).getCourse_type())))
-                .andExpect(jsonPath("$[1].price", is(this.courses.get(1).getPrice())));
+                .andExpect(jsonPath("$[1].price", is(this.courses.get(1).getPrice())))
+                .andExpect(jsonPath("$[1].category", is("JAVASCRIPT")));
+    }
+
+    @Test
+    public void getCourseNotFound() throws Exception{
+        this.mockMvc.perform(get("/course/{id}", 100))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -163,6 +199,89 @@ public class CourseControllerTests {
     }
 
     @Test
+    public void updateWithoutId() throws Exception {
+        CourseDto first = new CourseDto();
+        first.setName("Dan");
+        first.setCourse_type("JAVA");
+        first.setPrice(10.00);
+        first.setCategory(JAVA);
+
+        this.mockMvc.perform(put("/course/{id}", first.getId())
+            .contentType(contentType)
+            .content(json(first)))
+                .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
+    public void updateWithoutName() throws Exception {
+        CourseDto first = new CourseDto();
+        first.setName("Dan");
+        first.setCourse_type("JAVA");
+        first.setPrice(10.00);
+        first.setCategory(JAVA);
+
+        this.mockMvc.perform(put("/course/{id}", first.getId())
+            .content(json(first))
+            .contentType(contentType))
+            .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
+    public void checkIfNameExists() throws Exception {
+        CourseDto first = new CourseDto();
+        first.setName("Dan");
+        first.setCourse_type("JAVA");
+        first.setPrice(10.00);
+        first.setCategory(JAVA);
+
+        if (courseRepository.findByName(courses.get(0).getName()) != null) {
+            if (first.getName().equals(courseRepository.findByName(courses.get(0).getName()))) {
+                List<CourseEntity> all = courseRepository.findAll();
+                if (all.stream().anyMatch(one -> one.getName().equals(first.getName()))) {
+                    this.mockMvc.perform(put("/course/{id}", courses.get(0).getId())
+                        .contentType(contentType)
+                        .content(json(first)))
+                        .andExpect(status().isMethodNotAllowed());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void checkIfDifferentName() throws Exception {
+        CourseDto first = new CourseDto();
+        first.setName("Dan");
+        first.setCourse_type("JAVA");
+        first.setPrice(10.00);
+        first.setCategory(JAVA);
+
+        if (courseRepository.findByName(courses.get(0).getName()) != null) {
+            if (!first.getName().equals(courseRepository.findByName(courses.get(0).getName()))) {
+                this.mockMvc.perform(put("/course/{id}", courses.get(0).getId())
+                        .contentType(contentType)
+                        .content(json(first)))
+                        .andExpect(status().isOk());
+            }
+        }
+    }
+
+    @Test
+    public void checkIfNameNotFound() throws Exception {
+        CourseDto first = new CourseDto();
+        first.setName("Dan");
+        first.setCourse_type("JAVA");
+        first.setPrice(10.00);
+        first.setCategory(JAVA);
+
+        if (courseRepository.findByName(courses.get(0).getName()) == null) {
+            this.mockMvc.perform(put("/course/{id}", courses.get(0).getId())
+                    .contentType(contentType)
+                    .content(json(first)))
+                    .andExpect(status().isMethodNotAllowed());
+        }
+    }
+
+    @Test
     public void couldNotCreateCourse() throws Exception {
         CourseDto first = new CourseDto();
         first.setName("Dan");
@@ -188,6 +307,53 @@ public class CourseControllerTests {
             .content(json(first))
             .contentType(contentType))
             .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void wrongPathUpdate() throws Exception {
+        CourseDto first = new CourseDto();
+        first.setName("Dan");
+        first.setCourse_type("JAVA");
+        first.setPrice(10.00);
+        first.setCategory(JAVA);
+
+        this.mockMvc.perform(put("example/course/{id}", courses.get(0).getId())
+            .content(json(first))
+            .contentType(contentType))
+            .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void getCourseByCustomerUsername() throws Exception {
+        this.mockMvc.perform(get("/course/byCustomer/{username}", customers.get(0).getUsername()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    public void getCourseByCategory() throws Exception {
+        this.mockMvc.perform(get("/course/getAllByCategory/{category}", courses.get(0).getCategory()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id", is(this.courses.get(0).getId().intValue())))
+                .andExpect(jsonPath("$[0].name", is(this.courses.get(0).getName())))
+                .andExpect(jsonPath("$[0].course_type", is(this.courses.get(0).getCourse_type())))
+                .andExpect(jsonPath("$[0].price", is(this.courses.get(0).getPrice())))
+                .andExpect(jsonPath("$[0].category", is("JAVA")));
+    }
+
+    @Test
+    public void getCourseByInstructor() throws Exception {
+        this.mockMvc.perform(get("/course/allBy/{firstName}", courses.get(0).getInstructor()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$.id", is(this.courses.get(0).getId().intValue())))
+                .andExpect(jsonPath("$.name", is(this.courses.get(0).getName())))
+                .andExpect(jsonPath("$.course_type", is(this.courses.get(0).getCourse_type())))
+                .andExpect(jsonPath("$.price", is(this.courses.get(0).getPrice())))
+                .andExpect(jsonPath("$.category", is("JAVA")));
     }
 
     private String json(Object o) throws Exception {
