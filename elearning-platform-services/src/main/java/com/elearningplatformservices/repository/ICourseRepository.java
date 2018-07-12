@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ICourseRepository extends JpaRepository<CourseEntity, Long> {
     List<CourseEntity> findAllCoursesByInstructorFirstName(String firstName);
-    CourseEntity findCoursesByCustomerUsername(String username);
+    List<CourseEntity> findCoursesByCustomerUsername(String username);
     List<CourseEntity> findAllByCategory(CourseCategories category);
     CourseEntity findByName(String name);
 }

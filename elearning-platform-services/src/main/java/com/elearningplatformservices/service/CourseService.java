@@ -44,13 +44,11 @@ public class CourseService {
                 .collect(toList());
     }
 
-    public ResponseEntity<List<CustomerEntity>> getCourseByCustomer(String username) {
-        if (this.courseRepository.findCoursesByCustomerUsername(username) != null) {
-            return new ResponseEntity<>(this.courseRepository.findCoursesByCustomerUsername(username)
-                    .getCustomer(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public List<CourseDto> getCourseByCustomer(String username) {
+        List<CourseEntity> all = this.courseRepository.findCoursesByCustomerUsername(username);
+        return all.stream()
+                .map(CourseEntity::toDto)
+                .collect(Collectors.toList());
     }
 
     public List<CourseDto> getByCategory(CourseCategories category) {

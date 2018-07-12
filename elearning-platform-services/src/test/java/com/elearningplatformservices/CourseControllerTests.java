@@ -2,12 +2,14 @@ package com.elearningplatformservices;
 
 import com.elearningplatformservices.dto.CourseDto;
 import com.elearningplatformservices.dto.CustomerDto;
+import com.elearningplatformservices.dto.InstructorDto;
 import com.elearningplatformservices.entity.CourseEntity;
 import com.elearningplatformservices.entity.CustomerEntity;
 import com.elearningplatformservices.entity.InstructorEntity;
 import com.elearningplatformservices.enums.CourseCategories;
 import com.elearningplatformservices.repository.ICourseRepository;
 import com.elearningplatformservices.repository.ICustomerRepository;
+import com.elearningplatformservices.repository.IInstructorRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,6 +31,8 @@ import static com.elearningplatformservices.enums.CourseCategories.JAVASCRIPT;
 import static org.junit.Assert.*;
 
 import java.nio.charset.Charset;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,11 +60,16 @@ public class CourseControllerTests {
 
     private List<CustomerEntity> customers = new ArrayList<>();
 
+    private List<InstructorEntity> instructors = new ArrayList<>();
+
     @Autowired
     private ICourseRepository courseRepository;
 
     @Autowired
     private ICustomerRepository customerRepository;
+
+    @Autowired
+    private IInstructorRepository instructorRepository;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -85,31 +94,45 @@ public class CourseControllerTests {
 
         this.courseRepository.deleteAll();
         this.customerRepository.deleteAll();
+        this.instructorRepository.deleteAll();
 
         CustomerDto customer1 = new CustomerDto();
-        customer1.setId(1L);
         customer1.setFullName("Let Bogdan");
         customer1.setUsername("lbogdan");
 
         CustomerDto customer2 = new CustomerDto();
-        customer2.setId(2L);
         customer2.setFullName("Pavel Dan");
         customer2.setUsername("pavelDan");
+
+
+        InstructorDto instructor1 = new InstructorDto();
+        instructor1.setFirstName("Dan");
+        instructor1.setLastName("Bogdan");
+        instructor1.setPassword("password");
+        instructor1.setEmail("example@gmail.com");
+        instructor1.setDateCreated(Date.valueOf(LocalDate.now()));
+
+        InstructorDto instructor2 = new InstructorDto();
+        instructor2.setFirstName("John");
+        instructor2.setEmail("Doe");
+        instructor2.setPassword("password");
+        instructor2.setEmail("doe@gmail.com");
+        instructor2.setDateCreated(Date.valueOf(LocalDate.now()));
+
+        this.instructors.add(instructorRepository.save(instructor1.toEntity()));
+        this.instructors.add(instructorRepository.save(instructor2.toEntity()));
 
         CourseDto first = new CourseDto();
         first.setName("Dan");
         first.setCourse_type("JAVA");
         first.setPrice(10.00);
         first.setCategory(JAVA);
-//        first.setInstructor(new InstructorEntity().getFirstName());
-//        first.setCustomer(Arrays.asList(customer));
 
         CourseDto second = new CourseDto();
         second.setName("Filip");
         second.setCourse_type("JAVASCRIPT");
         second.setPrice(99.99);
         second.setCategory(JAVASCRIPT);
-        second.setInstructor(new InstructorEntity());
 
         this.customers.add(this.customerRepository.save(customer1.toEntity()));
         this.customers.add(this.customerRepository.save(customer2.toEntity()));
@@ -327,8 +350,7 @@ public class CourseControllerTests {
     public void getCourseByCustomerUsername() throws Exception {
         this.mockMvc.perform(get("/course/byCustomer/{username}", customers.get(0).getUsername()))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$", hasSize(0)));
+                .andExpect(content().contentType(contentType));
     }
 
     @Test
@@ -346,14 +368,9 @@ public class CourseControllerTests {
 
     @Test
     public void getCourseByInstructor() throws Exception {
-        this.mockMvc.perform(get("/course/allBy/{firstName}", courses.get(0).getInstructor()))
+        this.mockMvc.perform(get("/course/allBy/{firstName}", instructors.get(0).getFirstName()))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(contentType))
-                .andExpect(jsonPath("$.id", is(this.courses.get(0).getId().intValue())))
-                .andExpect(jsonPath("$.name", is(this.courses.get(0).getName())))
-                .andExpect(jsonPath("$.course_type", is(this.courses.get(0).getCourse_type())))
-                .andExpect(jsonPath("$.price", is(this.courses.get(0).getPrice())))
-                .andExpect(jsonPath("$.category", is("JAVA")));
+                .andExpect(content().contentType(contentType));
     }
 
     private String json(Object o) throws Exception {

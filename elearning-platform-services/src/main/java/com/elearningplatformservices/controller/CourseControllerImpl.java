@@ -2,6 +2,7 @@ package com.elearningplatformservices.controller;
 
 import com.elearningplatformservices.api.ICourseEndpoint;
 import com.elearningplatformservices.dto.CourseDto;
+import com.elearningplatformservices.dto.CustomerDto;
 import com.elearningplatformservices.entity.CustomerEntity;
 import com.elearningplatformservices.enums.CourseCategories;
 import com.elearningplatformservices.service.CourseService;
@@ -34,7 +35,7 @@ public class CourseControllerImpl implements ICourseEndpoint {
         return courseService.getAllCoursesByInstructor(firstName);
     }
 
-    public ResponseEntity<List<CustomerEntity>> getCoursesByCustomerUsername(@PathVariable String username) {
+    public List<CourseDto> getCoursesByCustomerUsername(@PathVariable String username) {
         return courseService.getCourseByCustomer(username);
     }
 
