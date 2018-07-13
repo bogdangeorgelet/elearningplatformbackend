@@ -6,7 +6,6 @@ import com.elearningplatformservices.dto.InstructorDto;
 import com.elearningplatformservices.entity.CourseEntity;
 import com.elearningplatformservices.entity.CustomerEntity;
 import com.elearningplatformservices.entity.InstructorEntity;
-import com.elearningplatformservices.enums.CourseCategories;
 import com.elearningplatformservices.repository.ICourseRepository;
 import com.elearningplatformservices.repository.ICustomerRepository;
 import com.elearningplatformservices.repository.IInstructorRepository;
@@ -103,7 +102,6 @@ public class CourseControllerTests {
         CustomerDto customer2 = new CustomerDto();
         customer2.setFullName("Pavel Dan");
         customer2.setUsername("pavelDan");
-
 
         InstructorDto instructor1 = new InstructorDto();
         instructor1.setFirstName("Dan");

@@ -22,7 +22,6 @@ public class ContactUsCustomerControllerImpl implements IContactUsCustomerEndpoi
         this.contactUsCustomerService = contactUsCustomerService;
     }
 
-    @Override
     public List<ContactUsCustomerDto> getAll() {
         return contactUsCustomerService.getAll();
     }
