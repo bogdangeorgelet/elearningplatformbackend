@@ -18,13 +18,13 @@ public class ContactUsCustomerEntity {
     @Column(name = "ID")
     private Long id;
 
-    @Column(name = "FIRSTNAME")
+    @Column(name = "FIRSTNAME", unique = true)
     private String firstName;
 
     @Column(name = "LASTNAME")
     private String lastName;
 
-    @Column(name = "EMAIL", unique = true)
+    @Column(name = "EMAIL")
     private String email;
 
     @Column(name = "COUNTRY")

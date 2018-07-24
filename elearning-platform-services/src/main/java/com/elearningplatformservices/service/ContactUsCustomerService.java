@@ -33,16 +33,16 @@ public class ContactUsCustomerService {
 
     public String create(ContactUsCustomerDto newCustomer) {
         if (newCustomer != null &&
-                this.contactUsCustomerRepository.findByEmail(newCustomer.getEmail()) == null) {
+                this.contactUsCustomerRepository.findByFirstName(newCustomer.getFirstName()) == null) {
             ContactUsCustomerEntity contactUsCustomerEntity = new ContactUsCustomerEntity().update(newCustomer);
             contactUsCustomerRepository.save(contactUsCustomerEntity);
             return "Created";
         } else {
             logger.info("----------------------------------------------------------");
-            logger.info("Couldn't create, email is already taken: ");
-            logger.info(newCustomer.getEmail());
+            logger.info("Couldn't create, firstName is already taken: ");
+            logger.info(newCustomer.getFirstName());
             logger.info("----------------------------------------------------------");
-            return "Couldn't create, email is already taken:";
+            return "Couldn't create";
         }
     }
 
