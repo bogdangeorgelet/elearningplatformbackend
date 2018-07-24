@@ -24,7 +24,7 @@ public class ContactUsCustomerEntity {
     @Column(name = "LASTNAME")
     private String lastName;
 
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", unique = true)
     private String email;
 
     @Column(name = "COUNTRY")
