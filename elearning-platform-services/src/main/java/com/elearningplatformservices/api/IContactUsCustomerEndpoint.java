@@ -16,6 +16,6 @@ public interface IContactUsCustomerEndpoint {
     @PostMapping("/add")
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
-    String create(@RequestBody ContactUsCustomerDto newCustomer);
+    void create(@RequestBody ContactUsCustomerDto newCustomer);
 
 }

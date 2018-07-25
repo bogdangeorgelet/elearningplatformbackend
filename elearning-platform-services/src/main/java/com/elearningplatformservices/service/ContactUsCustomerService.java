@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.NonUniqueResultException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,18 +33,27 @@ public class ContactUsCustomerService {
     }
 
     public String create(ContactUsCustomerDto newCustomer) {
-        if (newCustomer != null &&
-                this.contactUsCustomerRepository.findByFirstName(newCustomer.getFirstName()) == null) {
-            ContactUsCustomerEntity contactUsCustomerEntity = new ContactUsCustomerEntity().update(newCustomer);
-            contactUsCustomerRepository.save(contactUsCustomerEntity);
-            return "Created";
-        } else {
+        try {
+            contactUsCustomerRepository.save(newCustomer.toEntity());
+
+        } catch(NonUniqueResultException e) {
             logger.info("----------------------------------------------------------");
             logger.info("Couldn't create, firstName is already taken: ");
             logger.info(newCustomer.getFirstName());
             logger.info("----------------------------------------------------------");
-            return "Couldn't create";
+            throw new RuntimeException("Firstname is already taken");
         }
+        logger.info("----------------------------------------------------------");
+        logger.info("CREATED");
+        logger.info("----------------------------------------------------------");
+        return "Created";
     }
+
+//    public void create(ContactUsCustomerDto newCustomer) {
+//        if (newCustomer != null && this.contactUsCustomerRepository.findByFirstName(newCustomer.getFirstName()) == null) {
+//            ContactUsCustomerEntity contactUsCustomerEntity = new ContactUsCustomerEntity().update(newCustomer);
+//            contactUsCustomerRepository.save(contactUsCustomerEntity);
+//        }
+//    }
 
 }
