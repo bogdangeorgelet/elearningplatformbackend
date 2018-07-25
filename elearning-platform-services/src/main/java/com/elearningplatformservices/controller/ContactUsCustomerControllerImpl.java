@@ -4,6 +4,7 @@ import com.elearningplatformservices.api.IContactUsCustomerEndpoint;
 import com.elearningplatformservices.dto.ContactUsCustomerDto;
 import com.elearningplatformservices.service.ContactUsCustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ public class ContactUsCustomerControllerImpl implements IContactUsCustomerEndpoi
         return contactUsCustomerService.getAll();
     }
 
-    public void create(@RequestBody ContactUsCustomerDto newCustomer) {
-        contactUsCustomerService.create(newCustomer);
+    public ResponseEntity<String> create(@RequestBody ContactUsCustomerDto newCustomer) {
+        return contactUsCustomerService.create(newCustomer);
     }
 }

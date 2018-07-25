@@ -1,14 +1,15 @@
 package com.elearningplatformservices.service;
 
 import com.elearningplatformservices.dto.ContactUsCustomerDto;
-import com.elearningplatformservices.entity.ContactUsCustomerEntity;
 import com.elearningplatformservices.repository.IContactUsCustomerRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NonUniqueResultException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,21 +33,20 @@ public class ContactUsCustomerService {
         return allCustomers;
     }
 
-    public String create(ContactUsCustomerDto newCustomer) {
+    public ResponseEntity<String> create(ContactUsCustomerDto newCustomer) {
         try {
             contactUsCustomerRepository.save(newCustomer.toEntity());
-
-        } catch(NonUniqueResultException e) {
+        } catch(DataIntegrityViolationException e) {
             logger.info("----------------------------------------------------------");
-            logger.info("Couldn't create, firstName is already taken: ");
+            logger.info("Couldn't create, firstName is already taken:");
             logger.info(newCustomer.getFirstName());
             logger.info("----------------------------------------------------------");
-            throw new RuntimeException("Firstname is already taken");
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         logger.info("----------------------------------------------------------");
         logger.info("CREATED");
         logger.info("----------------------------------------------------------");
-        return "Created";
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 //    public void create(ContactUsCustomerDto newCustomer) {
