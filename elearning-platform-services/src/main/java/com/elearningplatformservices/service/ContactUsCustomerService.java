@@ -37,15 +37,12 @@ public class ContactUsCustomerService {
         try {
             contactUsCustomerRepository.save(newCustomer.toEntity());
         } catch(DataIntegrityViolationException e) {
-            logger.info("----------------------------------------------------------");
-            logger.info("Couldn't create, firstName is already taken:");
+            logger.info("--------------------------------------------------------- . \n Couldn't create, firstName is already taken: ");
             logger.info(newCustomer.getFirstName());
             logger.info("----------------------------------------------------------");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        logger.info("----------------------------------------------------------");
-        logger.info("CREATED");
-        logger.info("----------------------------------------------------------");
+        logger.info("---------------------------------------------------------- . \n CREATED . \n ----------------------------------------------------------");
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
