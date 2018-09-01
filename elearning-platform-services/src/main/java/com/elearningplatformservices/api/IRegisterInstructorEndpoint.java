@@ -13,7 +13,7 @@ import java.util.List;
 public interface IRegisterInstructorEndpoint {
 
     @GetMapping
-    List<RegisterInstructorEntity> getAll();
+    List<RegisterInstructorDto> getAll();
 
     @PostMapping("/add")
     @ResponseBody
