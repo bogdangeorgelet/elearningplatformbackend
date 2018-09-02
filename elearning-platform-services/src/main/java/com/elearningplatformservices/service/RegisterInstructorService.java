@@ -3,10 +3,14 @@ package com.elearningplatformservices.service;
 import com.elearningplatformservices.dto.RegisterInstructorDto;
 import com.elearningplatformservices.entity.RegisterInstructorEntity;
 import com.elearningplatformservices.repository.IRegisterInstructorRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +19,8 @@ import java.util.List;
 public class RegisterInstructorService {
 
     private final IRegisterInstructorRepository registerInstructorRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(ContactUsCustomerService.class.getName());
 
     @Autowired
     public RegisterInstructorService(IRegisterInstructorRepository registerInstructorRepository) {
@@ -36,10 +42,14 @@ public class RegisterInstructorService {
 //        }
 //    }
 
-    public ResponseEntity<String> create(RegisterInstructorDto newInstructor) {
+    public ResponseEntity<String> create(@RequestBody RegisterInstructorDto newInstructor) {
         try {
             registerInstructorRepository.save(newInstructor.toEntity());
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
+            logger.info("--------------------------------------------------------- . \n " +
+                    "Couldn't create, email is already taken: ");
+            logger.info(newInstructor.getUsername());
+            logger.info("----------------------------------------------------------");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(HttpStatus.CREATED);

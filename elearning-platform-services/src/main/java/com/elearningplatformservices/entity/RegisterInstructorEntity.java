@@ -26,7 +26,7 @@ public class RegisterInstructorEntity {
     @Column(name = "EMAIL")
     private String email;
 
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", unique = true)
     private String username;
 
     @Column(name = "PASSWORD")
