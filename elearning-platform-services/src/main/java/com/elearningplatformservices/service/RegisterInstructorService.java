@@ -29,6 +29,13 @@ public class RegisterInstructorService {
         return all;
     }
 
+//    public void create(RegisterInstructorDto newInstructor) {
+//        if (newInstructor != null) {
+//            RegisterInstructorEntity entity = new RegisterInstructorEntity().update(newInstructor);
+//            registerInstructorRepository.save(entity);
+//        }
+//    }
+
     public ResponseEntity<String> create(RegisterInstructorDto newInstructor) {
         try {
             registerInstructorRepository.save(newInstructor.toEntity());
@@ -37,4 +44,6 @@ public class RegisterInstructorService {
         }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
 }

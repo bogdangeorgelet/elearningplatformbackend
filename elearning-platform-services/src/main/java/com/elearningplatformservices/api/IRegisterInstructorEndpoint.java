@@ -17,7 +17,6 @@ public interface IRegisterInstructorEndpoint {
 
     @PostMapping("/add")
     @ResponseBody
-    @ResponseStatus(HttpStatus.CREATED)
     ResponseEntity<String> create(@RequestBody RegisterInstructorDto newInstructor);
 
 }
