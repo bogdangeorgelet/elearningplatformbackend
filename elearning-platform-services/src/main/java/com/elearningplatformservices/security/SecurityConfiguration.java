@@ -18,7 +18,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
                 .authorizeRequests()
                 .antMatchers("/index.html", "/", "/home", "/login", "/course/**", "/instructors/**",
-                        "/contactUs/**", "/customer/**", "/user/**", "/resource/**, /registerUser/add/**, /registerUser/** , /registerInstructor/**, /registerInstructor/add/**, /favicon.ico, /**/favicon.ico/**").permitAll()
+                        "/contactUs/**", "/customer/**", "/user/**", "/resource/**, /registerUser/** , /registerInstructor/**, /favicon.ico/**").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .csrf()

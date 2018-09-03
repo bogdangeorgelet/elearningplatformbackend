@@ -27,7 +27,7 @@ public class ContactUsCustomerControllerImpl implements IContactUsCustomerEndpoi
         return contactUsCustomerService.getAll();
     }
 
-    public ResponseEntity<String> create(@RequestBody ContactUsCustomerDto newCustomer) {
-        return contactUsCustomerService.create(newCustomer);
+    public void create(@RequestBody ContactUsCustomerDto newCustomer) {
+        contactUsCustomerService.create(newCustomer);
     }
 }

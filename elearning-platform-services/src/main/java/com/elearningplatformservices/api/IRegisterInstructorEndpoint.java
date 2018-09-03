@@ -1,7 +1,6 @@
 package com.elearningplatformservices.api;
 
 import com.elearningplatformservices.dto.RegisterInstructorDto;
-import com.elearningplatformservices.entity.RegisterInstructorEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,9 @@ public interface IRegisterInstructorEndpoint {
     @GetMapping
     List<RegisterInstructorDto> getAll();
 
-    @PostMapping("/add")
     @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/add")
     ResponseEntity<String> create(@RequestBody RegisterInstructorDto newInstructor);
 
 }
