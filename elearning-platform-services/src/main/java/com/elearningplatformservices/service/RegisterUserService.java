@@ -47,3 +47,8 @@ public class RegisterUserService {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
+
+//@TODO 1. add ZUUL, like https://spring.io/guides/tutorials/spring-security-and-angular-js/#_testing_angular_js_and_spring_security_part_viii , the Multiple UI Applications and a Gateway part
+//@TODO 2. connect FE with BE for Register User
+//@TODO 3. see why FE for Register Instructor is not working
+//@TODO 4. Fix login
