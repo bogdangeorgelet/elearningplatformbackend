@@ -11,16 +11,30 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .httpBasic()
+//            .and()
+//                .authorizeRequests()
+//                .antMatchers("/index.html", "/", "/home", "/login", "/course/**", "/instructors/**",
+//                        "/contactUs/**", "/customer/**", "/user/**", "/resource/**, /registerUser/** , /registerInstructor/**, /favicon.ico/**").permitAll()
+//                .anyRequest().authenticated()
+//            .and()
+//                .csrf()
+//                .disable();
+//
+//    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic()
-            .and()
+                .and()
                 .authorizeRequests()
-                .antMatchers("/index.html", "/", "/home", "/login", "/course/**", "/instructors/**",
-                        "/contactUs/**", "/customer/**", "/user/**", "/resource/**, /registerUser/** , /registerInstructor/**, /favicon.ico/**").permitAll()
+                .antMatchers("/index.html", "/", "/home", "/login", "/course/**", "/instructors/**", "/contactUs/**", "/customer/**", "/user/**", "/resource/**",
+                        "/registerInstructor/**", "/registerInstructor", "/registerUser", "/registerUser/**").permitAll()
                 .anyRequest().authenticated()
-            .and()
+                .and()
                 .csrf()
                 .disable();
 

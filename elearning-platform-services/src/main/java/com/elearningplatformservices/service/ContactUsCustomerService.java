@@ -31,7 +31,7 @@ public class ContactUsCustomerService {
     }
 
 
-    public void create(@RequestBody ContactUsCustomerDto newCustomer) {
+    public void create(ContactUsCustomerDto newCustomer) {
         if (newCustomer != null && this.contactUsCustomerRepository.findByFirstName(newCustomer.getFirstName()) == null) {
             ContactUsCustomerEntity contactUsCustomerEntity = new ContactUsCustomerEntity().update(newCustomer);
             contactUsCustomerRepository.save(contactUsCustomerEntity);

@@ -1,6 +1,7 @@
 package com.elearningplatformservices.service;
 
 import com.elearningplatformservices.dto.RegisterUserDto;
+import com.elearningplatformservices.entity.RegisterUserEntity;
 import com.elearningplatformservices.repository.IRegisterUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,9 +35,10 @@ public class RegisterUserService {
         return all;
     }
 
-    public ResponseEntity<String> create(@RequestBody RegisterUserDto registerUserDto) {
+    public ResponseEntity<String> create(RegisterUserDto registerUserDto) {
         try {
-            registerUserRepository.save(registerUserDto.toEntity());
+            RegisterUserEntity registerUserEntity = new RegisterUserEntity().update(registerUserDto);
+            registerUserRepository.save(registerUserEntity);
         } catch (DataIntegrityViolationException e) {
             logger.info("--------------------------------------------------------- . \n " +
                     "Couldn't create, email is already taken: ");
@@ -50,5 +52,4 @@ public class RegisterUserService {
 
 //@TODO 1. add ZUUL, like https://spring.io/guides/tutorials/spring-security-and-angular-js/#_testing_angular_js_and_spring_security_part_viii , the Multiple UI Applications and a Gateway part
 //@TODO 2. connect FE with BE for Register User
-//@TODO 3. see why FE for Register Instructor is not working
-//@TODO 4. Fix login
+//@TODO 3. Fix login

@@ -35,12 +35,13 @@ public class RegisterInstructorService {
         return all;
     }
 
-    public ResponseEntity<String> create(@RequestBody RegisterInstructorDto newInstructor) {
+    public ResponseEntity<String> create(RegisterInstructorDto newInstructor) {
         try {
-            registerInstructorRepository.save(newInstructor.toEntity());
+            RegisterInstructorEntity registerInstructorEntity = new RegisterInstructorEntity().update(newInstructor);
+            registerInstructorRepository.save(registerInstructorEntity);
         } catch (DataIntegrityViolationException e) {
             logger.info("--------------------------------------------------------- . \n " +
-                    "Couldn't create, email is already taken: ");
+                    "Couldn't create, username is already taken: ");
             logger.info(newInstructor.getUsername());
             logger.info("----------------------------------------------------------");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
