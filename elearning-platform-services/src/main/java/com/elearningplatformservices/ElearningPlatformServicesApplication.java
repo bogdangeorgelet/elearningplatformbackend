@@ -1,7 +1,10 @@
 package com.elearningplatformservices;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -14,6 +17,7 @@ import static springfox.documentation.builders.PathSelectors.any;
 
 @SpringBootApplication
 @EnableSwagger2
+@EnableDiscoveryClient
 public class ElearningPlatformServicesApplication {
 
     public static void main(String[] args) {

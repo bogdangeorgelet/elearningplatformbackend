@@ -30,6 +30,9 @@ public class CustomerEntity {
     private String address;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
+    @JsonIgnore
+    @Column(name = "ENABLED")
+    private boolean enabled = true;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     private List<CourseEntity> courses;
