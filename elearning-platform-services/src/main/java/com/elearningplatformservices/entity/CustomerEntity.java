@@ -43,9 +43,9 @@ public class CustomerEntity {
     public CustomerDto toDto() {
         CustomerDto dto = new CustomerDto();
         dto.setId(this.id);
+        dto.setFullName(this.fullName);
         dto.setUsername(this.username);
         dto.setPassword(this.password);
-        dto.setFullName(this.fullName);
         dto.setAddress(this.address);
         dto.setEmail(this.email);
         dto.setPhoneNumber(this.phoneNumber);
@@ -55,9 +55,9 @@ public class CustomerEntity {
 
     public CustomerEntity update(CustomerDto customerDto) {
         this.id = customerDto.getId();
+        this.fullName = customerDto.getFullName();
         this.username = customerDto.getUsername();
         this.password = customerDto.getPassword();
-        this.fullName = customerDto.getFullName();
         this.email = customerDto.getEmail();
         this.address = customerDto.getAddress();
         this.phoneNumber = customerDto.getPhoneNumber();

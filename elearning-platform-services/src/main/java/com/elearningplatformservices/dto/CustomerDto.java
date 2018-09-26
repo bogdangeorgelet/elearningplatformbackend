@@ -19,7 +19,7 @@ public class CustomerDto {
     private String email;
     private String address;
     private String phoneNumber;
-//    @JsonIgnore
+    @JsonIgnore
     private List<CourseEntity> courses;
 
 
@@ -31,6 +31,7 @@ public class CustomerDto {
         entity.setId(this.id);
         entity.setFullName(this.fullName);
         entity.setUsername(this.username);
+        entity.setPassword(this.password);
         entity.setEmail(this.email);
         entity.setAddress(this.address);
         entity.setPhoneNumber(this.phoneNumber);

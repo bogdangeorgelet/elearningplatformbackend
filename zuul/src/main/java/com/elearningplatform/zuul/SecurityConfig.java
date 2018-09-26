@@ -35,12 +35,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
                 .usersByUsernameQuery(
-                        "select username,password, enabled from customers where username=?")
+                        "select username,password,enabled from customers where username=?")
                 .authoritiesByUsernameQuery(
-                        "select username from customers where username=?");
+                        "select username,password,enabled from customers where username=?");
     }
 
 }
