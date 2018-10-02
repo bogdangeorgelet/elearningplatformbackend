@@ -19,6 +19,7 @@ public class CustomerDto {
     private String email;
     private String address;
     private String phoneNumber;
+    private boolean enabled = true;
     @JsonIgnore
     private List<CourseEntity> courses;
 
