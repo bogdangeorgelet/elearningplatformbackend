@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.apache.tomcat.jdbc.pool.DataSource;
 
 
+import java.security.Principal;
 import java.util.Collection;
 
 @RestController
@@ -32,6 +33,11 @@ public class LoginController {
         ds.setPassword("testpassword");
 
         return ds;
+    }
+
+    @RequestMapping("/user")
+    public Principal user(Principal user) {
+        return user;
     }
 
 }
