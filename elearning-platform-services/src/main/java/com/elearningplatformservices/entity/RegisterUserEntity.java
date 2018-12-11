@@ -29,14 +29,18 @@ public class RegisterUserEntity {
     @Column(name = "PASSWORD")
     private String password;
 
+    @Column(name = "CONFIRM_PASSWORD")
+    private String confirmPassword;
+
     public RegisterUserEntity() {
     }
 
-    public RegisterUserEntity(String firstName, String lastName, String email, String password) {
+    public RegisterUserEntity(String firstName, String lastName, String email, String password, String confirmPassword) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.confirmPassword = confirmPassword;
     }
 
     public RegisterUserDto toDto() {
@@ -46,6 +50,7 @@ public class RegisterUserEntity {
         dto.setLastName(this.lastName);
         dto.setEmail(this.email);
         dto.setPassword(this.password);
+        dto.setConfirmPassword(this.confirmPassword);
         return dto;
     }
 
@@ -55,6 +60,7 @@ public class RegisterUserEntity {
         this.lastName = dto.getLastName();
         this.email = dto.getEmail();
         this.password = dto.getPassword();
+        this.confirmPassword = dto.getConfirmPassword();
         return this;
     }
 

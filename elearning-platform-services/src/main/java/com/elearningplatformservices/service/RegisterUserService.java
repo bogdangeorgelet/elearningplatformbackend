@@ -10,7 +10,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +48,3 @@ public class RegisterUserService {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }
-
-//@TODO 1. add ZUUL, like https://spring.io/guides/tutorials/spring-security-and-angular-js/#_testing_angular_js_and_spring_security_part_viii , the Multiple UI Applications and a Gateway part
-//@TODO 2. connect FE with BE for Register User
-//@TODO 3. Fix login

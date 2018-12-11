@@ -13,6 +13,8 @@ public class RegisterUserDto {
     private String lastName;
     private String email;
     private String password;
+    private String confirmPassword;
+
 
     public RegisterUserEntity toEntity() {
         RegisterUserEntity userEntity = new RegisterUserEntity();
@@ -21,6 +23,7 @@ public class RegisterUserDto {
         userEntity.setLastName(this.lastName);
         userEntity.setEmail(this.email);
         userEntity.setPassword(this.password);
+        userEntity.setConfirmPassword(this.confirmPassword);
         return userEntity;
     }
 
