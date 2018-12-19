@@ -40,8 +40,8 @@ public class RegisterUserService {
             registerUserRepository.save(registerUserEntity);
         } catch (DataIntegrityViolationException e) {
             logger.info("--------------------------------------------------------- . \n " +
-                    "Couldn't create, email is already taken: ");
-            logger.info(registerUserDto.getEmail());
+                    "Couldn't create, username is already taken: ");
+            logger.info(registerUserDto.getUsername());
             logger.info("----------------------------------------------------------");
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

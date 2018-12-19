@@ -12,9 +12,10 @@ public class RegisterUserDto {
     private String firstName;
     private String lastName;
     private String email;
+    private String username;
     private String password;
     private String confirmPassword;
-
+    private boolean enabled = true;
 
     public RegisterUserEntity toEntity() {
         RegisterUserEntity userEntity = new RegisterUserEntity();
